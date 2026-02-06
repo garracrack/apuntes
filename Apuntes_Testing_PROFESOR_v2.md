@@ -1052,15 +1052,164 @@ def test_precio_negativo():
 - Manejo diferente de nulos
 - Timeouts y tiempos de espera
 
-**Estrategias de integración:**
-- **Big Bang:** Todo junto de una vez (difícil depurar)
-- **Top-Down:** Desde módulos superiores hacia inferiores
-- **Bottom-Up:** Desde módulos inferiores hacia superiores
-- **Sandwich:** Combinación de ambas direcciones
+#### Conceptos clave: Stubs y Drivers
+
+Cuando integramos módulos, algunos pueden no estar disponibles todavía. Necesitamos **componentes simulados**:
+
+```
+┌─────────────────────────────────────────────────────────────────────────────┐
+│                    STUBS vs DRIVERS                                         │
+├─────────────────────────────────────────────────────────────────────────────┤
+│                                                                             │
+│   DRIVER (Controlador)                STUB (Sustituto)                      │
+│   ────────────────────                ────────────────                      │
+│                                                                             │
+│   Simula un módulo SUPERIOR           Simula un módulo INFERIOR             │
+│   que LLAMA al módulo bajo prueba     que ES LLAMADO por el módulo          │
+│                                                                             │
+│        ┌─────────┐                         ┌─────────┐                      │
+│        │ DRIVER  │ (simula GUI)            │ Módulo  │                      │
+│        └────┬────┘                         │  real   │                      │
+│             │ llama                        └────┬────┘                      │
+│             ▼                                   │ llama                     │
+│        ┌─────────┐                              ▼                           │
+│        │ Módulo  │                         ┌─────────┐                      │
+│        │  real   │                         │  STUB   │ (simula BD)          │
+│        └─────────┘                         └─────────┘                      │
+│                                                                             │
+│   Usado en: BOTTOM-UP                  Usado en: TOP-DOWN                   │
+│                                                                             │
+└─────────────────────────────────────────────────────────────────────────────┘
+```
+
+**Ejemplo práctico:**
+- **Stub:** Probamos el módulo de "Carrito" pero la "Base de Datos" no está lista → Creamos un stub que devuelve productos ficticios
+- **Driver:** Probamos el módulo "Calculadora de IVA" pero la "Interfaz de Usuario" no está lista → Creamos un driver que llama a la calculadora con valores de prueba
+
+#### Estrategias de Integración
+
+```
+┌─────────────────────────────────────────────────────────────────────────────┐
+│                    ESTRATEGIAS DE INTEGRACIÓN                               │
+├─────────────────────────────────────────────────────────────────────────────┤
+│                                                                             │
+│  1. BIG BANG (Todo de golpe)                                                │
+│     ├── Se integran TODOS los componentes a la vez                          │
+│     ├── ✅ Simple, sin stubs ni drivers                                     │
+│     └── ❌ Muy difícil localizar errores, mucho "tiempo muerto"             │
+│                                                                             │
+│  2. TOP-DOWN (Arriba → Abajo)                                               │
+│     ├── Empezar por módulos de nivel superior (GUI, menú principal)         │
+│     ├── Usar STUBS para simular módulos inferiores                          │
+│     ├── ✅ Prueba temprana del flujo principal, detecta errores de diseño   │
+│     └── ❌ Necesita muchos stubs, lógica de negocio se prueba tarde         │
+│                                                                             │
+│  3. BOTTOM-UP (Abajo → Arriba)                                              │
+│     ├── Empezar por módulos de nivel inferior (BD, cálculos)                │
+│     ├── Usar DRIVERS para invocar los módulos bajo prueba                   │
+│     ├── ✅ Módulos base muy bien probados, sin stubs complejos              │
+│     └── ❌ La interfaz de usuario se prueba tarde                           │
+│                                                                             │
+│  4. SANDWICH / HÍBRIDA                                                      │
+│     ├── Combinar Top-Down y Bottom-Up simultáneamente                       │
+│     ├── Un equipo desde arriba, otro desde abajo                            │
+│     ├── ✅ Más rápido, aprovecha ventajas de ambos                          │
+│     └── ❌ Requiere más coordinación                                        │
+│                                                                             │
+│  5. AD-HOC (Según disponibilidad)                                           │
+│     ├── Integrar cada componente cuando esté listo                          │
+│     ├── ✅ Sin tiempos muertos, desarrollo ágil                             │
+│     └── ❌ Puede necesitar stubs y drivers según el caso                    │
+│                                                                             │
+│  6. ORIENTADA AL PROCESO DE NEGOCIO                                         │
+│     ├── Integración guiada por procesos de negocio                          │
+│     ├── Pruebas End-to-End por flujo de negocio                             │
+│     ├── ✅ Enfocada en el valor para el usuario                             │
+│     └── ❌ Puede requerir stubs y drivers                                   │
+│                                                                             │
+│  7. ORIENTADA A FUNCIONES                                                   │
+│     ├── Se orienta a una función específica del sistema                     │
+│     ├── Se integra cada componente necesitado por esa función               │
+│     ├── ✅ Permite demos funcionales tempranas                              │
+│     └── ❌ Otras funciones se prueban más tarde                             │
+│                                                                             │
+└─────────────────────────────────────────────────────────────────────────────┘
+```
+
+#### Visualización: Top-Down vs Bottom-Up
+
+```
+                    TOP-DOWN                           BOTTOM-UP
+                    ────────                           ─────────
+                                                       
+    Paso 1:         [GUI]                              [GUI]           Paso 4
+                      │                                  ▲
+                      ▼                                  │
+    Paso 2:     [Controlador]                      [Controlador]       Paso 3
+                   /     \                            /     \
+                  ▼       ▼                          ▲       ▲
+    Paso 3:  [Servicio] [Servicio]              [Servicio] [Servicio]  Paso 2
+                  │       │                          │       │
+                  ▼       ▼                          ▲       ▲
+    Paso 4:    [BD]     [API]                      [BD]     [API]      Paso 1
+                                                   
+               ↓ Flujo de                         ↑ Flujo de
+               integración                        integración
+               
+               Usa STUBS                          Usa DRIVERS
+               (simula lo de abajo)               (simula lo de arriba)
+```
+
+#### ¿Qué estrategia elegir?
+
+| Situación | Estrategia recomendada | Razón |
+|-----------|------------------------|-------|
+| Proyecto pequeño, evolutivo | Big Bang | Simple, poco overhead |
+| Interfaz de usuario prioritaria | Top-Down | Permite demos tempranas |
+| Lógica de negocio crítica | Bottom-Up | Asegura cálculos correctos |
+| Equipos grandes distribuidos | Bottom-Up o Híbrida | Trabajo paralelo |
+| Software de terceros/Frameworks | Top-Down | Integración con código ajeno |
+| Desarrollo ágil, sprints cortos | Ad-Hoc | Sin tiempos muertos |
+| Proyecto con alto riesgo | Híbrida | Equilibra velocidad y calidad |
+| Flujos de negocio complejos | Orientada al proceso de negocio | Pruebas End-to-End por proceso |
+| Demostración de funcionalidad específica | Orientada a funciones | Permite demos funcionales tempranas |
+
+> 💡 **Consejo estratégico:** Lo ideal es **adaptar la estrategia** para optimizar riesgos o recursos:
+> - **Estrategias mixtas:** Un equipo puede usar Top-Down (empezando por la GUI), mientras otros equipos usan Bottom-Up
+> - **Combinar con fechas de desarrollo:** Adaptar la estrategia según las fechas previstas de finalización de cada módulo
+> - **Priorizar interfaces críticas:** Integrar primero los módulos con interfaces más complejas o críticas
+
+#### Ejemplo de Integración: E-commerce
+
+```
+Sistema de Comercio Electrónico:
+
+┌─────────────┐     ┌─────────────┐     ┌─────────────┐
+│   Carrito   │────►│   Pagos     │────►│   Envíos    │
+│   de compra │     │             │     │             │
+└─────────────┘     └─────────────┘     └─────────────┘
+       │                   │                   │
+       ▼                   ▼                   ▼
+┌─────────────┐     ┌─────────────┐     ┌─────────────┐
+│  Base de    │     │  Pasarela   │     │  API        │
+│  Datos      │     │  de pago    │     │  transportista│
+└─────────────┘     └─────────────┘     └─────────────┘
+
+Pruebas de integración a verificar:
+1. Carrito → Base de Datos (¿guarda correctamente los productos?)
+2. Carrito → Pagos (¿pasa correctamente el total?)
+3. Pagos → Pasarela (¿se comunica correctamente con el banco?)
+4. Pagos → Envíos (¿inicia el envío tras pago exitoso?)
+5. Envíos → API transportista (¿obtiene tracking correctamente?)
+```
 
 ### 3.2.3 Nivel 3: Pruebas de Sistema
 
-**Definición:** Verifican el comportamiento del sistema completo en un entorno similar a producción.
+**Definición:** Comprobación del **sistema integrado completo** respecto del cumplimiento de los requisitos específicos.
+
+Desde el **punto de vista técnico**: ya se han probado todos los componentes y su interrelación.
+
+Desde el **punto de vista del usuario**: se prueba el entorno, las funciones, la carga, etc.
 
 | Aspecto | Descripción |
 |---------|-------------|
@@ -1068,27 +1217,73 @@ def test_precio_negativo():
 | **¿Quién las hace?** | Equipo de QA independiente |
 | **¿Cuándo?** | Después de las pruebas de integración |
 | **Técnicas** | Principalmente caja negra |
-| **Entorno** | Similar a producción |
+| **Entorno** | Debería corresponderse con el entorno de producción |
 
-**Tipos de pruebas a nivel de sistema:**
-- Funcionales (flujos completos)
-- Rendimiento (carga, estrés)
-- Seguridad
-- Usabilidad
-- Compatibilidad
+**¿Qué se prueba en las pruebas de sistema?**
+- Implantación completa y correcta de los requisitos
+- Implantación en el entorno real del sistema y con datos cercanos a la práctica
+- Se omiten los controladores de pruebas y los stubs (todo es real)
+- Todas las interfaces externas del sistema se probarán bajo condiciones de producción
+
+> ⚠️ **Importante:** No suele ser buena idea lanzar pruebas en el entorno de producción:
+> - Los errores surgidos pueden dañar el sistema productivo
+> - El entorno del sistema está en movimiento (los datos, el estado de las aplicaciones…). Eso dificulta que las pruebas sean reproducibles.
+
+#### Pruebas de Requisitos Funcionales
+
+Las pruebas de los requisitos funcionales pueden incluir:
+1. **Pruebas basadas en riesgos y/o especificaciones de requisitos**: Los casos de prueba se deducen a partir de la definición de requisitos
+2. **Pruebas basadas en procesos de negocio**: Los procesos de negocio individuales sirven como base para la creación de casos de prueba
+3. **Pruebas basadas en casos de uso**: Los casos de prueba se deducen a partir de los casos de uso (procesos habituales del usuario)
+4. **Cualquier otra descripción de alto nivel** del comportamiento del sistema
+
+#### Pruebas de Requisitos No Funcionales
+
+El cumplimiento de estos requisitos es igual de importante pero a menudo **difícil de probar** y por ello están sometidos a un mayor riesgo.
+
+**Problemas comunes:**
+- En la definición de requisitos no siempre está claro "cómo de bien" debe funcionar algo
+- A menudo definiciones vagas: "manejar sin problemas", "pantallas claras"
+- Los requisitos no funcionales se dan a menudo de manera **implícita** y por este motivo no se definen
+
+**La prueba de un requisito no funcional se da como superada si se consigue un determinado valor en una métrica establecida:**
+- **MTBF** (Mean Time Between Failures - Tiempo medio entre fallos)
+- **MTTR** (Mean Time To Repair - Tiempo medio de reparación)
+
+**Las pruebas no funcionales incluyen** (pero no están limitadas a):
+- Pruebas de **prestaciones** (rendimiento)
+- Pruebas de **carga**
+- Pruebas de **estrés**
+- Pruebas de **usabilidad**
+- Pruebas de **mantenibilidad**
+- Pruebas de **fiabilidad**
+- Pruebas de **portabilidad**
 
 > 🔧 **Herramienta práctica:** Para pruebas de rendimiento en bases de datos utilizaremos **HammerDB**, que permite simular cargas de trabajo realistas y medir tiempos de respuesta.
 
+> 📈 **Las Pruebas de sistema deben estudiar los requisitos funcionales y no funcionales del sistema, así como las características de calidad de los datos.**
+
 ### 3.2.4 Nivel 4: Pruebas de Aceptación
 
-**Definición:** Verifican que el sistema satisface las necesidades del negocio y está listo para producción.
+**Definición:** Las pruebas de aceptación comprueban el producto desde el **punto de vista del usuario o del cliente** antes de su paso a producción. La pregunta clave es: **¿Se cumplen las expectativas del usuario/cliente?**
 
 | Aspecto | Descripción |
 |---------|-------------|
-| **¿Qué se prueba?** | Valor de negocio |
+| **¿Qué se prueba?** | Valor de negocio, expectativas del usuario |
 | **¿Quién las hace?** | Usuarios, clientes, Product Owner |
 | **¿Cuándo?** | Última fase antes de producción |
 | **Entorno** | Producción o pre-producción |
+
+**Involucración del usuario según el tipo de software:**
+
+La involucración del usuario varía según el grado de personalización del software:
+
+| Tipo de Software | Involucración del Usuario |
+|-----------------|---------------------------|
+| **Software personalizado** | El software será probado directamente por el solicitante o cliente |
+| **Productos "de masas"** | El software será probado por una selección representativa de usuarios |
+
+> 💡 **Recomendación:** El usuario debería estar involucrado **desde el principio del proyecto**: aceptación de requisitos, validación de prototipos, revisión de diseños, etc. No dejes la validación con usuarios para el final.
 
 **Tipos de pruebas de aceptación:**
 
