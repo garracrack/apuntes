@@ -269,13 +269,49 @@ Total = Número astronómico (más que átomos en el universo)
 
 > **"Encontrar y corregir defectos no sirve si el sistema no satisface las necesidades del usuario."**
 
-**Verificación vs Validación:**
+**Verificación vs Validación: Construir bien vs Construir lo correcto**
+
+En testing se distingue entre verificación y validación porque ayudan a evitar un error frecuente: **cumplir documentos y fallar en el mundo real**.
 
 | Verificación | Validación |
 |--------------|------------|
-| ¿Construimos el producto CORRECTAMENTE? | ¿Construimos el producto CORRECTO? |
+| ¿Construimos el producto **CORRECTAMENTE**? | ¿Construimos el producto **CORRECTO**? |
 | Cumple especificaciones | Cumple necesidades reales |
 | Funciona según documentación | El usuario está satisfecho |
+| Se apoya en **especificaciones, criterios de aceptación y reglas de negocio formalizadas** | Se apoya en el **uso real, la intención del requisito y el valor para el usuario** |
+
+```
+┌─────────────────────────────────────────────────────────────────────────────┐
+│                    VERIFICACIÓN vs VALIDACIÓN                               │
+├─────────────────────────────────────────────────────────────────────────────┤
+│                                                                             │
+│   VERIFICACIÓN                           VALIDACIÓN                         │
+│   ────────────                           ──────────                         │
+│                                                                             │
+│   "¿Lo hicimos BIEN?"                    "¿Hicimos lo CORRECTO?"            │
+│                                                                             │
+│   • Comparar con especificaciones        • Comparar con necesidades reales  │
+│   • Criterios de aceptación              • Intención del requisito          │
+│   • Reglas de negocio documentadas       • Valor para el usuario            │
+│   • Revisiones, inspecciones             • Pruebas de aceptación            │
+│                                                                             │
+│   ─────────────────────────────────────────────────────────────────────     │
+│                                                                             │
+│   Un sistema puede estar VERIFICADO porque hace lo que se pidió,            │
+│   pero NO estar VALIDADO porque:                                            │
+│     • No resuelve el problema real                                          │
+│     • Contradice una norma                                                  │
+│     • Genera una respuesta inaceptable para el usuario                      │
+│                                                                             │
+└─────────────────────────────────────────────────────────────────────────────┘
+```
+
+**Ejemplo:**
+> Se especificó: *"El sistema debe mostrar el saldo en la moneda local"*
+> 
+> ✅ **Verificación PASA:** El sistema muestra el saldo en euros (moneda local de España).
+> 
+> ❌ **Validación FALLA:** El usuario es una empresa que opera en dólares y necesita ver el saldo en USD. El sistema hace lo que se pidió, pero no resuelve la necesidad real.
 
 **Un software sin bugs que nadie quiere usar sigue siendo un fracaso.**
 
