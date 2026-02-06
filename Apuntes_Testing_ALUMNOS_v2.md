@@ -729,13 +729,13 @@ El modelo de desarrollo determina cuándo se realizan las pruebas, quién las ha
 └─────────────────────────────────────────────────────────────────────────────┘
 ```
 
-### 3.1.3 Desarrollo Iterativo e Incremental
+### 3.1.3 Desarrollo Iterativo e Incremental y Metodologías Ágiles (Scrum)
 
-**Descripción:** El software se desarrolla a través de ciclos repetidos (iteraciones), cada uno produciendo un incremento funcional.
+**Concepto base - Iterativo e Incremental:** El software se desarrolla a través de ciclos repetidos (iteraciones), cada uno produciendo un incremento funcional. Este enfoque surgió en los años 80 como alternativa al modelo en cascada.
 
 ```
 ┌─────────────────────────────────────────────────────────────────────────────┐
-│                    DESARROLLO ITERATIVO                                     │
+│                    DESARROLLO ITERATIVO E INCREMENTAL                       │
 ├─────────────────────────────────────────────────────────────────────────────┤
 │                                                                             │
 │   Iteración 1         Iteración 2         Iteración 3                       │
@@ -756,13 +756,13 @@ El modelo de desarrollo determina cuándo se realizan las pruebas, quién las ha
 └─────────────────────────────────────────────────────────────────────────────┘
 ```
 
-### 3.1.4 Metodologías Ágiles (Scrum)
+**Scrum - La implementación más popular:** Scrum es una metodología ágil específica que implementa el enfoque iterativo/incremental con reglas concretas. Es como la diferencia entre "transporte con motor" (concepto) y "Toyota Corolla" (implementación específica).
 
-**Descripción:** Framework (marco de trabajo) que estructura el trabajo en Sprints (ciclos de trabajo de 2-4 semanas donde se entrega un incremento funcional).
+> 💡 **Nota:** Existen otras metodologías iterativas además de Scrum: XP (Extreme Programming), Kanban, RUP (Rational Unified Process), etc. Scrum es simplemente la más extendida.
 
 ```
 ┌─────────────────────────────────────────────────────────────────────────────┐
-│                    TESTING EN SCRUM                                         │
+│                    SCRUM: TESTING EN LA PRÁCTICA                            │
 ├─────────────────────────────────────────────────────────────────────────────┤
 │                                                                             │
 │   SPRINT (2-4 semanas)                                                      │
@@ -782,7 +782,7 @@ El modelo de desarrollo determina cuándo se realizan las pruebas, quién las ha
 │   └─────────────────────────────────────────────────────────────┘          │
 │                                                                             │
 │   Características del testing en Scrum:                                     │
-│   • El testing es parte del Definition of Done                              │
+│   • El testing es parte del Definition of Done (criterio de "terminado")   │
 │   • No hay fase separada de testing                                         │
 │   • Tester integrado en el equipo                                           │
 │   • Automatización casi obligatoria                                         │
@@ -790,16 +790,33 @@ El modelo de desarrollo determina cuándo se realizan las pruebas, quién las ha
 └─────────────────────────────────────────────────────────────────────────────┘
 ```
 
-### 3.1.5 DevOps (Development + Operations) e Integración Continua
+### 3.1.4 DevOps e Integración/Despliegue Continuos (CI/CD)
 
-**Descripción:** Cultura y prácticas que unifican desarrollo (Dev) y operaciones (Ops) para entregas continuas.
+**¿Qué problema resuelve DevOps?**
+
+Tradicionalmente existía una barrera entre los equipos de desarrollo (Dev) y operaciones (Ops):
+- **Desarrolladores:** "¡Funciona en mi máquina!"
+- **Operaciones:** "¡Esto no funciona en producción!"
+
+**DevOps** es una **cultura y conjunto de prácticas** que elimina esta barrera, haciendo que un mismo equipo sea responsable de todo el ciclo de vida del software: desde escribir el código hasta mantenerlo en producción.
+
+**CI/CD son las prácticas técnicas que lo hacen posible:**
+
+| Sigla | Nombre completo | Qué significa |
+|-------|-----------------|---------------|
+| **CI** | Continuous Integration (Integración Continua) | Cada vez que alguien sube código, se compila y ejecutan pruebas automáticamente |
+| **CD** | Continuous Delivery (Entrega Continua) | El código probado está siempre listo para desplegar con un clic |
+| **CD** | Continuous Deployment (Despliegue Continuo) | El código se despliega automáticamente a producción sin intervención humana |
 
 ```
 ┌─────────────────────────────────────────────────────────────────────────────┐
 │            PIPELINE CI/CD (Integración Continua / Despliegue Continuo)      │
 ├─────────────────────────────────────────────────────────────────────────────┤
 │                                                                             │
+│   El desarrollador sube código y automáticamente se ejecuta:                │
+│                                                                             │
 │   CODE ──► BUILD ──► TEST ──► RELEASE ──► DEPLOY ──► MONITOR               │
+│   (subir)  (compilar) (probar) (empaquetar) (desplegar) (vigilar)          │
 │                        │                               │                    │
 │                        ▼                               ▼                    │
 │               ┌────────────────┐            ┌──────────────────┐           │
@@ -815,38 +832,44 @@ El modelo de desarrollo determina cuándo se realizan las pruebas, quién las ha
 │                                                                             │
 │   🔧 Herramientas que usaremos: Postman (APIs), utPLSQL (BD), HammerDB    │
 │                                                                             │
-│   Características:                                                          │
-│   • Todo automatizado                                                       │
-│   • Feedback en minutos                                                     │
-│   • Despliegues frecuentes (varias veces al día)                           │
-│   • Testing en producción (monitorizado)                                   │
+│   Si las pruebas FALLAN → El código NO avanza → Feedback inmediato         │
+│   Si las pruebas PASAN → El código avanza automáticamente                  │
 │                                                                             │
 └─────────────────────────────────────────────────────────────────────────────┘
 ```
 
-### 3.1.6 Comparativa de Modelos y Testing
+**¿Por qué es revolucionario para el testing?**
+- Las pruebas son **obligatorias**: sin ellas, el código no puede avanzar
+- **Feedback en minutos**: sabes inmediatamente si rompiste algo
+- **Automatización total**: no hay excusa para no probar
+- **Testing en producción**: con técnicas como canary releases (desplegar solo al 5% de usuarios primero)
+
+### 3.1.5 Comparativa de Modelos y Testing
 
 ```
 ┌─────────────────────────────────────────────────────────────────────────────┐
 │              COMPARATIVA: TESTING EN DIFERENTES MODELOS                     │
 ├─────────────────────────────────────────────────────────────────────────────┤
 │                                                                             │
-│  Aspecto          Cascada       Modelo V      Iterativo    Ágil            │
-│  ───────          ───────       ────────      ─────────    ────            │
+│  Aspecto          Cascada    Modelo V    Ágil/Scrum   DevOps/CI-CD         │
+│  ───────          ───────    ────────    ──────────   ────────────         │
 │                                                                             │
-│  Cuándo se        Al final      En paralelo   Cada         Continuo        │
-│  planifica                      al diseño     iteración                    │
+│  Cuándo se        Al final   En paralelo  Cada         Siempre             │
+│  planifica                   al diseño    Sprint       (automatizado)      │
 │  testing                                                                    │
 │                                                                             │
-│  Cuándo se        Al final      Al final      En cada      Continuo        │
-│  ejecuta                        (pero mejor   iteración    (diario)        │
-│  testing                        preparado)                                 │
+│  Cuándo se        Al final   Al final     Continuo     Continuo            │
+│  ejecuta                     (pero mejor  (cada día)   (cada commit)       │
+│  testing                     preparado)                                     │
 │                                                                             │
-│  Documentación    Extensa       Extensa       Moderada     Mínima          │
+│  Documentación    Extensa    Extensa      Mínima       Código = Doc        │
 │                                                                             │
-│  Automatización   Opcional      Recomendada   Importante   Esencial        │
+│  Automatización   Opcional   Recomendada  Importante   Obligatoria         │
 │                                                                             │
-│  Feedback         Muy tardío    Tardío        Frecuente    Muy frecuente   │
+│  Feedback         Muy tardío Tardío       Frecuente    Inmediato           │
+│  (semanas/meses)  (semanas)  (días)       (minutos)                        │
+│                                                                             │
+│  Coste de cambio  Muy alto   Alto         Bajo         Muy bajo            │
 │                                                                             │
 └─────────────────────────────────────────────────────────────────────────────┘
 ```
@@ -857,9 +880,8 @@ El modelo de desarrollo determina cuándo se realizan las pruebas, quién las ha
 |--------|---------------|--------------|
 | **Cascada** | Requisitos muy estables, contratos fijos, regulaciones estrictas | Hay incertidumbre, el cliente cambia de opinión |
 | **Modelo en V** | Software crítico (médico, aeronáutico), necesitas trazabilidad total | Necesitas flexibilidad y entregas rápidas |
-| **Iterativo** | Proyectos medianos, algo de incertidumbre | El cliente quiere todo definido desde el inicio |
-| **Ágil (Scrum)** | Requisitos cambiantes, feedback frecuente, startups | Cliente no disponible, equipo no preparado |
-| **DevOps/CI-CD** | Entregas continuas, SaaS (Software as a Service -software como servicio en la nube-), web apps | Entornos muy regulados, equipos pequeños sin infraestructura |
+| **Ágil (Scrum)** | Requisitos cambiantes, feedback frecuente, startups, MVP (Minimum Viable Product - producto mínimo viable) | Cliente no disponible, equipo no preparado |
+| **DevOps/CI-CD** | Entregas continuas, SaaS (Software as a Service -software en la nube-), web apps, apps móviles | Entornos muy regulados sin posibilidad de automatizar, equipos muy pequeños sin infraestructura |
 
 ```
 ┌─────────────────────────────────────────────────────────────────────────────┐
@@ -882,7 +904,7 @@ El modelo de desarrollo determina cuándo se realizan las pruebas, quién las ha
 │                     │              │                                        │
 │                     │              └── NO ──► ÁGIL (SCRUM)                  │
 │                     │                                                       │
-│                     └── NO ──► ITERATIVO                                    │
+│                     └── NO ──► ÁGIL (con iteraciones más largas)            │
 │                                                                             │
 └─────────────────────────────────────────────────────────────────────────────┘
 ```
@@ -894,9 +916,11 @@ El modelo de desarrollo determina cuándo se realizan las pruebas, quién las ha
 | App de banco con regulación estricta | **Modelo en V** | Trazabilidad, auditorías, seguridad crítica |
 | Startup con MVP | **Ágil/Scrum** | Requisitos cambiantes, pivotar rápido |
 | Software de marcapasos | **Modelo en V** | Vidas en juego, certificaciones |
-| Web de e-commerce | **DevOps** | Despliegues frecuentes, A/B testing |
+| Web de e-commerce (Amazon, eBay) | **DevOps/CI-CD** | Despliegues frecuentes, A/B testing |
 | Proyecto con contrato cerrado | **Cascada** | Alcance fijo, precio fijo |
-| Juego móvil | **Ágil** | Feedback de usuarios, iteraciones rápidas |
+| App móvil (Instagram, TikTok) | **DevOps/CI-CD** | Actualizaciones continuas, millones de usuarios |
+| Netflix, Spotify | **DevOps/CI-CD** | Miles de despliegues al día |
+| Juego móvil | **Ágil/Scrum** | Feedback de usuarios, iteraciones rápidas |
 
 ---
 
