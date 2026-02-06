@@ -399,7 +399,11 @@ El sistema hace exactamente lo que se especificó, pero esas especificaciones ya
 
 # MÓDULO 2: CALIDAD DEL SOFTWARE
 
-Ahora que entendemos qué son los errores, defectos y fallos, y conocemos los principios que guían el testing, surge una pregunta fundamental: **¿qué estamos tratando de conseguir con todo esto?** La respuesta es: **calidad**. Este módulo nos ayudará a entender qué significa realmente la calidad del software y cómo medirla.
+Ahora que entendemos qué son los errores, defectos y fallos, y conocemos los principios que guían el testing, surge una pregunta fundamental: **¿qué estamos tratando de conseguir con todo esto?** La respuesta es: **calidad**. 
+
+> 💡 **¿Por qué estudiar calidad en un curso de testing?** Porque **el testing es el principal instrumento para medir y verificar la calidad del software**. No podemos probar eficazmente si no sabemos qué características de calidad debemos verificar. Un tester que no entiende la calidad es como un médico que no entiende la salud: puede hacer pruebas, pero no sabrá interpretarlas ni priorizarlas correctamente.
+
+Este módulo nos ayudará a entender qué significa realmente la calidad del software, cómo medirla, y así sabremos exactamente **qué debemos verificar** cuando diseñemos nuestras pruebas.
 
 ## 2.1 ¿Qué es la Calidad del Software?
 
