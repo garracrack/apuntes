@@ -74,77 +74,426 @@ Un tester profesional no es alguien que "simplemente usa el software". Es un esp
 
 ---
 
-## 1.2 Conceptos Clave: Error, Defecto y Fallo
+## 1.2 Los Tres Conceptos Clave: Error, Defecto y Fallo
 
-Estos tres términos son absolutamente fundamentales en el mundo del testing. Aunque en el lenguaje cotidiano a menudo se usan como sinónimos, en testing tienen significados muy precisos y diferenciados.
+Estos tres términos son absolutamente fundamentales en el mundo del testing. Aunque en el lenguaje cotidiano a menudo se usan como sinónimos, en testing tienen significados muy precisos y diferenciados. Entender la diferencia es crucial para comunicarse correctamente en un equipo de desarrollo y para entender la cadena de causalidad de los problemas de software.
 
 ### 1.2.1 ERROR (Mistake / Equivocación)
 
-**Definición:** Un error es una **acción humana incorrecta** que produce un resultado incorrecto. Es el origen, la causa raíz de todo el problema.
+#### Definición Formal
+Un error es una **acción humana incorrecta** que produce un resultado incorrecto. Es el origen, la causa raíz de todo el problema. Los errores los cometen las personas: desarrolladores, analistas, diseñadores, arquitectos, e incluso los propios testers.
 
-**Características:**
-- Es una acción humana (no del software)
-- El software no comete errores por sí mismo
-- Los cometen: desarrolladores, analistas, diseñadores, arquitectos, testers
+#### Características del Error
 
-**Tipos de errores comunes:**
-- Errores de interpretación de requisitos
-- Errores de lógica al programar
-- Errores de comunicación en el equipo
-- Errores por desconocimiento técnico
-- Errores por fatiga o presión
+**1. Es una acción humana (no del software)**
+El software no comete errores por sí mismo. El software hace exactamente lo que le dijeron que hiciera. Si hace algo incorrecto, es porque un humano le dio instrucciones incorrectas.
 
-### 1.2.2 DEFECTO (Bug -bicho, error- / Defect / Fault)
+**2. Puede ocurrir en cualquier fase del desarrollo**
+- En la fase de requisitos: malinterpretar lo que el cliente necesita
+- En la fase de diseño: crear una arquitectura inadecuada
+- En la fase de codificación: escribir código incorrecto
+- En la fase de pruebas: diseñar casos de prueba que no detectan problemas
+- En la fase de documentación: escribir instrucciones incorrectas
 
-**Definición:** Un defecto es una **imperfección en el software** que puede causar que el sistema falle. Es la manifestación del error en el código o documentación.
+**3. Es la causa raíz de los problemas**
+Cuando investigamos un fallo de software, si seguimos la cadena de causalidad hasta el origen, siempre encontraremos un error humano.
 
-**Características:**
-- Está en el producto (código, documentos, configuración)
-- Es el resultado de un error humano
-- Puede existir sin manifestarse (código no ejecutado)
-- También llamado "bug", "fault", "problema"
+**4. Tiene múltiples causas posibles:**
+- **Falta de conocimiento:** El desarrollador no conocía bien el lenguaje o la tecnología
+- **Distracción:** Interrupciones, cansancio, multitarea
+- **Presión de tiempo:** Prisas por entregar que llevan a descuidos
+- **Mala comunicación:** Requisitos ambiguos o mal transmitidos
+- **Complejidad:** El sistema es tan complejo que es fácil cometer errores
+- **Herramientas inadecuadas:** El entorno de desarrollo no ayuda a prevenir errores
 
-**Tipos de defectos:**
-- Defectos en el código fuente
-- Defectos en requisitos (ambigüedades, contradicciones)
-- Defectos en diseño
-- Defectos en configuración
-- Defectos en documentación
+#### Ejemplos Detallados de Errores por Fase
+
+**Errores en Requisitos:**
+
+| Tipo de Error | Ejemplo | Consecuencia Potencial |
+|---------------|---------|------------------------|
+| Ambigüedad | "El sistema debe ser rápido" | Cada persona interpreta "rápido" de forma diferente |
+| Omisión | No especificar qué pasa si el usuario cancela una operación | El sistema puede quedar en estado inconsistente |
+| Contradicción | Un requisito dice máximo 100 caracteres, otro dice mínimo 150 | Imposible implementar correctamente |
+| Incorrección | Especificar IVA del 18% cuando legalmente es 21% | Cálculos fiscales incorrectos |
+
+**Errores en Diseño:**
+
+| Tipo de Error | Ejemplo | Consecuencia Potencial |
+|---------------|---------|------------------------|
+| Arquitectura inadecuada | Diseño que no escala para el volumen esperado | Sistema colapsará bajo carga real |
+| Seguridad deficiente | No contemplar cifrado de datos sensibles | Vulnerabilidad a ataques |
+| Flujo incompleto | No diseñar qué pasa en casos de error | Comportamiento impredecible |
+
+**Errores en Codificación:**
+
+| Tipo de Error | Ejemplo | Consecuencia Potencial |
+|---------------|---------|------------------------|
+| Sintaxis | Escribir `>` en lugar de `>=` | Valores límite tratados incorrectamente |
+| Lógica | Usar `AND` cuando debería ser `OR` | Condiciones evaluadas incorrectamente |
+| Typo | Escribir `cantdad` en lugar de `cantidad` | Error de compilación o variable no definida |
+| Off-by-one | Bucle de 0 a 10 cuando debería ser 0 a 9 | Procesamiento de elemento extra o faltante |
+
+### 1.2.2 DEFECTO (Defect / Fault / Bug)
+
+#### Definición Formal
+Un defecto es una **imperfección o anomalía** en un producto de trabajo (código, documento, diseño, etc.) que puede hacer que el sistema falle en realizar su función requerida. El defecto es la manifestación del error en el producto.
+
+#### La Relación Error → Defecto
+Cuando un humano comete un error durante la creación de un producto de trabajo, ese error queda "plasmado" en el producto como un defecto. El error es la acción; el defecto es el resultado de esa acción.
+
+```
+┌─────────────────────────────────────────────────────────────────────┐
+│                    ERROR → DEFECTO                                  │
+├─────────────────────────────────────────────────────────────────────┤
+│                                                                     │
+│   ACCIÓN HUMANA                      RESULTADO EN EL PRODUCTO       │
+│   (Error)                            (Defecto)                      │
+│                                                                     │
+│   El programador escribe    ───►     El código fuente contiene     │
+│   ">" en lugar de ">="               la condición incorrecta        │
+│                                                                     │
+│   El analista olvida        ───►     El documento de requisitos    │
+│   especificar un caso                está incompleto                │
+│                                                                     │
+│   El diseñador calcula mal  ───►     El diagrama de arquitectura   │
+│   la capacidad necesaria             es inadecuado                  │
+│                                                                     │
+└─────────────────────────────────────────────────────────────────────┘
+```
+
+#### Características del Defecto
+
+**1. Existe en el producto (código, documentación, diseño)**
+A diferencia del error, que es una acción que ya pasó, el defecto es algo que existe físicamente y puede ser encontrado examinando el producto.
+
+**2. Es introducido por un error humano**
+Todo defecto tiene su origen en un error. No hay defectos "espontáneos".
+
+**3. Puede estar "dormido" sin causar problemas**
+Un defecto en el código puede existir durante años sin causar ningún fallo, simplemente porque nadie ejecutó esa parte del código con las condiciones necesarias para activarlo.
+
+**4. También se le conoce como "bug"**
+Este término tiene un origen histórico interesante.
+
+#### Origen del Término "Bug"
+
+El 9 de septiembre de 1947, Grace Hopper y su equipo estaban trabajando en el ordenador Mark II en la Universidad de Harvard cuando encontraron una polilla (moth) atrapada en un relé que estaba causando un mal funcionamiento. Pegaron la polilla en el libro de registro con la anotación "First actual case of bug being found" (Primer caso real de bug encontrado).
+
+Aunque el término "bug" para referirse a fallos técnicos ya existía antes (Thomas Edison lo usaba), este incidente popularizó su uso en el contexto de la informática.
+
+#### Tipos de Defectos
+
+**Por su naturaleza:**
+- **Defectos de función:** El sistema no hace lo que debería
+- **Defectos de datos:** Procesa o almacena datos incorrectamente
+- **Defectos de interfaz:** Problemas en la comunicación entre componentes
+- **Defectos de rendimiento:** El sistema es más lento de lo requerido
+- **Defectos de usabilidad:** El sistema es difícil de usar
+- **Defectos de seguridad:** El sistema es vulnerable a ataques
+
+**Por su severidad:**
+- **Crítico:** El sistema no puede usarse, pérdida de datos, riesgo de seguridad
+- **Mayor:** Funcionalidad importante no funciona, sin workaround (solución alternativa)
+- **Menor:** Funcionalidad menor afectada, existe workaround
+- **Trivial:** Problema cosmético o de documentación
+
+#### Ejemplos Detallados de Defectos
+
+**EJEMPLO 1: Defecto en Condición de Frontera**
+```
+Requisito: "Aplicar descuento del 10% si el importe es mayor o igual a 100€"
+
+Código CORRECTO:
+if (importe >= 100) {
+    aplicarDescuento(10);
+}
+
+Código con DEFECTO:
+if (importe > 100) {        // ← DEFECTO: falta el signo "="
+    aplicarDescuento(10);
+}
+
+Análisis:
+- El ERROR fue del programador al escribir ">" en lugar de ">="
+- El DEFECTO es la condición incorrecta que ahora existe en el código
+- El defecto causará un FALLO cuando alguien compre exactamente por 100€
+```
+
+**EJEMPLO 2: Defecto en Validación**
+```
+Requisito: "El campo edad debe aceptar valores entre 0 y 120 inclusive"
+
+Código con DEFECTO:
+function validarEdad(edad) {
+    if (edad > 0 && edad < 120) {  // ← DEFECTO: no incluye 0 ni 120
+        return true;
+    }
+    return false;
+}
+
+Análisis:
+- Los valores 0 y 120 son válidos según el requisito
+- El código los rechazará incorrectamente
+- Un recién nacido (edad 0) no podría registrarse
+- Una persona de 120 años tampoco
+```
+
+**EJEMPLO 3: Defecto en Manejo de Nulos**
+```
+Código con DEFECTO:
+function obtenerNombreCompleto(usuario) {
+    return usuario.nombre + " " + usuario.apellido;
+}
+
+Análisis:
+- Si usuario es null o undefined, este código fallará
+- Si nombre o apellido son null, el resultado será incorrecto
+- Falta validación de datos de entrada
+```
 
 ### 1.2.3 FALLO (Failure)
 
-**Definición:** Un fallo es la **manifestación visible** de un defecto cuando el software no se comporta como se esperaba durante su ejecución.
+#### Definición Formal
+Un fallo es la **manifestación visible** de un defecto durante la ejecución del software. Es cuando el usuario o el tester observa que el sistema no se comporta como debería. El fallo es lo que vemos; el defecto es la causa oculta.
 
-**Características:**
-- Es observable por el usuario o el tester
-- Ocurre durante la ejecución del software
-- No todos los defectos causan fallos
-- Puede haber fallos sin defectos (entorno, hardware)
+#### La Relación Defecto → Fallo
+Cuando el software se ejecuta y el flujo de ejecución pasa por código que contiene un defecto, con datos que activan ese defecto, se produce un fallo observable.
 
-### 1.2.4 La Cadena de Causalidad
+```
+┌─────────────────────────────────────────────────────────────────────┐
+│                    DEFECTO → FALLO                                  │
+├─────────────────────────────────────────────────────────────────────┤
+│                                                                     │
+│   DEFECTO EN EL CÓDIGO              FALLO OBSERVABLE                │
+│   (Causa oculta)                    (Síntoma visible)               │
+│                                                                     │
+│   Condición ">" en lugar   ───►     Cliente de 100€ no recibe      │
+│   de ">=" para descuento            su descuento prometido          │
+│                                                                     │
+│   División sin validar     ───►     Pantalla de error o sistema    │
+│   que divisor sea ≠ 0               se congela                      │
+│                                                                     │
+│   Campo sin límite de      ───►     Datos truncados o error de     │
+│   longitud                          base de datos                   │
+│                                                                     │
+└─────────────────────────────────────────────────────────────────────┘
+```
+
+#### Características del Fallo
+
+**1. Es observable (se puede ver, medir o detectar)**
+A diferencia del defecto que puede estar oculto en el código, el fallo es algo que podemos percibir: un mensaje de error, un resultado incorrecto, un sistema que se congela, un tiempo de respuesta excesivo.
+
+**2. Ocurre durante la ejecución**
+Los fallos solo pueden producirse cuando el software está ejecutándose. Un defecto en código que nunca se ejecuta nunca producirá un fallo.
+
+**3. Es consecuencia de un defecto**
+Todo fallo tiene como causa un defecto (o varios defectos combinados).
+
+**4. No todos los defectos producen fallos**
+Esta es una distinción crucial:
+- Un defecto puede estar en código que nunca se ejecuta ("código muerto")
+- Un defecto puede requerir condiciones muy específicas para activarse
+- Un defecto puede estar "compensado" accidentalmente por otro defecto
+
+#### ¿Cuándo un Defecto NO Produce Fallo?
+
+**Caso 1: Código Muerto**
+```
+function calcularPrecio(producto) {
+    if (producto.tipo == "normal") {
+        return producto.precio;
+    } else if (producto.tipo == "premium") {
+        return producto.precio * 1.2;
+    } else {
+        // Este código nunca se ejecuta porque todos los productos
+        // son "normal" o "premium"
+        return producto.precio / 0;  // ← DEFECTO pero nunca falla
+    }
+}
+```
+
+**Caso 2: Condiciones No Alcanzadas**
+```
+function validarCodigo(codigo) {
+    if (codigo.length > 1000000) {  // Nunca nadie introduce códigos tan largos
+        // Este código con defectos nunca se ejecuta en la práctica
+    }
+}
+```
+
+**Caso 3: Defectos que se Compensan**
+```
+// Defecto 1: calcula el doble
+function calcularSubtotal(cantidad, precio) {
+    return cantidad * precio * 2;  // ERROR: multiplica por 2
+}
+
+// Defecto 2: calcula la mitad
+function calcularTotal(subtotal, impuesto) {
+    return (subtotal + impuesto) / 2;  // ERROR: divide por 2
+}
+
+// Por "casualidad", los errores se compensan y el resultado final
+// puede parecer correcto en algunos casos
+```
+
+#### Tipos de Fallos
+
+**Por visibilidad:**
+- **Fallos evidentes:** Pantallazos de error, sistema que se cierra
+- **Fallos sutiles:** Resultado ligeramente incorrecto, pérdida de rendimiento
+- **Fallos silenciosos:** Corrupción de datos sin mensaje de error
+
+**Por frecuencia:**
+- **Fallos sistemáticos:** Ocurren siempre bajo las mismas condiciones
+- **Fallos intermitentes:** Ocurren solo a veces (los más difíciles de diagnosticar)
+- **Fallos únicos:** Solo han ocurrido una vez
+
+**Por impacto:**
+- **Fallos bloqueantes:** Impiden continuar usando el sistema
+- **Fallos degradantes:** El sistema funciona pero con limitaciones
+- **Fallos cosméticos:** No afectan a la funcionalidad pero sí a la apariencia
+
+### 1.2.4 La Cadena Causa-Efecto Completa
+
+Ahora que entendemos los tres conceptos, veamos cómo se relacionan en una cadena completa de causa-efecto:
 
 ```
 ┌─────────────────────────────────────────────────────────────────────────────┐
-│                    CADENA DE CAUSALIDAD                                     │
+│                    CADENA CAUSA-EFECTO COMPLETA                             │
 ├─────────────────────────────────────────────────────────────────────────────┤
 │                                                                             │
-│   PERSONA                    SOFTWARE                   EJECUCIÓN           │
-│   comete                     contiene                   produce             │
+│   ┌─────────────┐       ┌─────────────┐       ┌─────────────┐              │
+│   │   ERROR     │ ────► │  DEFECTO    │ ────► │   FALLO     │              │
+│   │  (Humano)   │       │ (Producto)  │       │ (Ejecución) │              │
+│   └─────────────┘       └─────────────┘       └─────────────┘              │
+│         │                     │                     │                       │
+│         │                     │                     │                       │
+│   ┌─────▼─────┐         ┌─────▼─────┐         ┌─────▼─────┐                │
+│   │           │         │           │         │           │                │
+│   │ El        │         │ El código │         │ Cuando    │                │
+│   │ programador│        │ fuente    │         │ un cliente│                │
+│   │ escribe   │         │ contiene: │         │ compra    │                │
+│   │ ">" en    │         │           │         │ por 100€  │                │
+│   │ lugar de  │         │ if(x>100) │         │ exactos,  │                │
+│   │ ">="      │         │           │         │ no recibe │                │
+│   │           │         │ en vez de │         │ el        │                │
+│   │           │         │           │         │ descuento │                │
+│   │           │         │ if(x>=100)│         │           │                │
+│   │           │         │           │         │           │                │
+│   └───────────┘         └───────────┘         └───────────┘                │
 │                                                                             │
-│   ┌───────┐    introduce    ┌─────────┐    causa      ┌───────┐            │
-│   │ ERROR │ ──────────────► │ DEFECTO │ ────────────► │ FALLO │            │
-│   └───────┘                 └─────────┘               └───────┘            │
-│                                                                             │
-│   (Acción                   (En el                    (Comportamiento       │
-│    humana)                   producto)                 incorrecto)          │
-│                                                                             │
-│   Ejemplo:                                                                  │
-│   Programador      →        Código con      →         Sistema rechaza      │
-│   entiende mal              condición                 usuarios válidos     │
-│   el requisito              incorrecta                                      │
+│   CAUSA RAÍZ            DEFECTO LATENTE       SÍNTOMA VISIBLE              │
+│   (Ya pasó)             (Existe en código)    (Se observa)                 │
 │                                                                             │
 └─────────────────────────────────────────────────────────────────────────────┘
 ```
+
+#### Puntos Clave para Recordar
+
+1. **Un ERROR siempre precede a un DEFECTO**
+   - Sin acción humana incorrecta, no hay defecto
+   - El defecto es el "rastro" que deja el error
+
+2. **Un DEFECTO puede o no producir un FALLO**
+   - Depende de si se ejecuta ese código
+   - Depende de las condiciones de ejecución
+
+3. **Un FALLO siempre es causado por un DEFECTO**
+   - Si observamos un fallo, sabemos que hay al menos un defecto
+   - Encontrar el defecto a partir del fallo es parte del proceso de debugging
+
+4. **El testing busca FALLOS para descubrir DEFECTOS**
+   - El tester observa el comportamiento (busca fallos)
+   - Al encontrar un fallo, sabemos que existe un defecto
+   - El desarrollador luego localiza y corrige el defecto
+   - Finalmente, se investiga el error para prevenir su repetición
+
+### 1.2.5 El Proceso de Gestión de Defectos
+
+Cuando un tester encuentra un fallo, inicia un proceso de gestión:
+
+```
+┌─────────────────────────────────────────────────────────────────────────────┐
+│                    CICLO DE VIDA DEL DEFECTO                                │
+├─────────────────────────────────────────────────────────────────────────────┤
+│                                                                             │
+│   ┌──────────┐     ┌──────────┐     ┌──────────┐     ┌──────────┐          │
+│   │  NUEVO   │────►│ ASIGNADO │────►│ EN CURSO │────►│ RESUELTO │          │
+│   │          │     │          │     │          │     │          │          │
+│   └──────────┘     └──────────┘     └──────────┘     └────┬─────┘          │
+│        │                                                   │                │
+│        │ Rechazado                                         │                │
+│        │ (no es defecto                                    │                │
+│        │  o duplicado)                                     ▼                │
+│        │                                             ┌──────────┐          │
+│        │                                             │VERIFICADO│          │
+│        ▼                                             │ (re-test)│          │
+│   ┌──────────┐                                       └────┬─────┘          │
+│   │ CERRADO  │◄───────────────────────────────────────────┘                │
+│   │          │          Pasa las pruebas                                    │
+│   └──────────┘                                                              │
+│        ▲                                                                    │
+│        │ No pasa (se reabre)                                               │
+│        └───────────────────────────────────────────────────────────────────┘
+│                                                                             │
+└─────────────────────────────────────────────────────────────────────────────┘
+```
+
+### 1.2.6 Ejercicios de Práctica
+
+---
+
+**EJERCICIO 1:**
+En un sistema de reservas de hotel, el requisito dice: "El número de noches debe estar entre 1 y 30". Un usuario introduce 0 noches y el sistema lo acepta sin mostrar error.
+
+**Identifica:**
+a) ¿Cuál fue el error?
+b) ¿Cuál es el defecto?
+c) ¿Cuál es el fallo?
+
+*Espacio para tu respuesta:*
+
+---
+
+**EJERCICIO 2:**
+Una tienda online tiene el siguiente código para calcular gastos de envío:
+
+```javascript
+if (pesoKg > 5) {
+    gastosEnvio = 15;
+} else if (pesoKg > 2) {
+    gastosEnvio = 10;
+} else {
+    gastosEnvio = 5;
+}
+```
+
+El requisito indica:
+- Hasta 2 kg: 5€
+- De 2 a 5 kg: 10€
+- Más de 5 kg: 15€
+
+Un paquete de exactamente 2 kg cobra 5€. Analiza:
+a) ¿Es correcto este resultado?
+b) ¿Qué pasa con un paquete de exactamente 5 kg?
+c) ¿Hay algún defecto en el código?
+
+*Espacio para tu respuesta:*
+
+---
+
+**EJERCICIO 3:**
+Un sistema bancario permite transferencias. El requisito dice: "Las transferencias deben ser de mínimo 1€ y máximo 10.000€". Un usuario intenta transferir 10.001€ y el sistema lo permite.
+
+**Identifica:**
+a) ¿Cuál fue el error?
+b) ¿Cuál es el defecto?
+c) ¿Cuál es el fallo?
+
+*Espacio para tu respuesta:*
 
 ---
 
