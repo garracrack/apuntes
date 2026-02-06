@@ -842,6 +842,53 @@ Calcula: a) El ahorro total b) El ROI del testing
 └─────────────────────────────────────────────────────────────────────────────┘
 ```
 
+**¿Qué modelo es mejor?** Depende del contexto. No hay uno "mejor" universal:
+
+| Modelo | Mejor para... | Evitar si... |
+|--------|---------------|--------------|
+| **Cascada** | Requisitos muy estables, contratos fijos, regulaciones estrictas | Hay incertidumbre, el cliente cambia de opinión |
+| **Modelo en V** | Software crítico (médico, aeronáutico), necesitas trazabilidad total | Necesitas flexibilidad y entregas rápidas |
+| **Iterativo** | Proyectos medianos, algo de incertidumbre | El cliente quiere todo definido desde el inicio |
+| **Ágil (Scrum)** | Requisitos cambiantes, feedback frecuente, startups | Cliente no disponible, equipo no preparado |
+| **DevOps/CI-CD** | Entregas continuas, SaaS, web apps | Entornos muy regulados, equipos pequeños sin infraestructura |
+
+```
+┌─────────────────────────────────────────────────────────────────────────────┐
+│                    ¿QUÉ MODELO ELEGIR?                                      │
+├─────────────────────────────────────────────────────────────────────────────┤
+│                                                                             │
+│   ¿Los requisitos están claros y no van a cambiar?                          │
+│      │                                                                      │
+│      ├── SÍ ──► ¿Es software crítico (vidas en juego)?                      │
+│      │              │                                                       │
+│      │              ├── SÍ ──► MODELO EN V                                  │
+│      │              │                                                       │
+│      │              └── NO ──► CASCADA                                      │
+│      │                                                                      │
+│      └── NO ──► ¿El cliente puede dar feedback frecuente?                   │
+│                     │                                                       │
+│                     ├── SÍ ──► ¿Necesitas desplegar muy frecuentemente?     │
+│                     │              │                                        │
+│                     │              ├── SÍ ──► DEVOPS / CI-CD                │
+│                     │              │                                        │
+│                     │              └── NO ──► ÁGIL (SCRUM)                  │
+│                     │                                                       │
+│                     └── NO ──► ITERATIVO                                    │
+│                                                                             │
+└─────────────────────────────────────────────────────────────────────────────┘
+```
+
+**Ejemplos reales:**
+
+| Proyecto | Modelo recomendado | Por qué |
+|----------|-------------------|---------|
+| App de banco con regulación estricta | **Modelo en V** | Trazabilidad, auditorías, seguridad crítica |
+| Startup con MVP | **Ágil/Scrum** | Requisitos cambiantes, pivotar rápido |
+| Software de marcapasos | **Modelo en V** | Vidas en juego, certificaciones |
+| Web de e-commerce | **DevOps** | Despliegues frecuentes, A/B testing |
+| Proyecto con contrato cerrado | **Cascada** | Alcance fijo, precio fijo |
+| Juego móvil | **Ágil** | Feedback de usuarios, iteraciones rápidas |
+
 ---
 
 ## 3.2 Niveles de Prueba
