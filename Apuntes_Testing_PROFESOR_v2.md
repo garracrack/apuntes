@@ -399,6 +399,8 @@ El sistema hace exactamente lo que se especificó, pero esas especificaciones ya
 
 # MÓDULO 2: CALIDAD DEL SOFTWARE
 
+Ahora que entendemos qué son los errores, defectos y fallos, y conocemos los principios que guían el testing, surge una pregunta fundamental: **¿qué estamos tratando de conseguir con todo esto?** La respuesta es: **calidad**. Este módulo nos ayudará a entender qué significa realmente la calidad del software y cómo medirla.
+
 ## 2.1 ¿Qué es la Calidad del Software?
 
 ### 2.1.1 La Complejidad de Definir "Calidad"
@@ -510,7 +512,7 @@ El estándar ISO/IEC 25010 define **8 características principales** de calidad:
 
 ## 2.2 QA (Quality Assurance) vs QC (Quality Control)
 
-Es fundamental entender la diferencia entre estos dos conceptos:
+Ya sabemos QUÉ características debe tener un software de calidad (ISO 25010). Ahora veamos CÓMO conseguimos esa calidad. Existen dos enfoques complementarios que debemos distinguir:
 
 ```
 ┌─────────────────────────────────────────────────────────────────────────────┐
@@ -591,6 +593,8 @@ Las medidas de aseguramiento de la calidad se pueden clasificar según su **enfo
 > 💡 **Clave:** Un buen programa de calidad combina **ambos enfoques**. Es más barato prevenir errores que encontrarlos y corregirlos después.
 
 ## 2.3 El Coste de la Calidad
+
+Tanto las actividades de QA (prevención) como las de QC (detección) requieren inversión. Pero, ¿vale la pena invertir en calidad? Para responder, necesitamos entender los diferentes tipos de costes asociados.
 
 ### 2.3.1 Tipos de Costes
 
@@ -722,7 +726,11 @@ b) **ROI del testing:**
 
 # MÓDULO 3: EL TESTING EN EL CICLO DE VIDA DEL SOFTWARE
 
+Ya sabemos qué es la calidad y por qué es importante invertir en ella. Pero, **¿cuándo y cómo debemos realizar el testing?** La respuesta depende del modelo de desarrollo que utilicemos. En este módulo veremos cómo el testing se integra de forma diferente según la metodología elegida.
+
 ## 3.1 Modelos de Desarrollo de Software
+
+El modelo de desarrollo determina cuándo se realizan las pruebas, quién las hace y con qué intensidad. Veamos los principales modelos y cómo afectan al testing.
 
 ### 3.1.1 Modelo en Cascada (Waterfall)
 
@@ -979,6 +987,8 @@ b) **ROI del testing:**
 
 ## 3.2 Niveles de Prueba
 
+Independientemente del modelo de desarrollo elegido, las pruebas se organizan en **niveles** según el alcance de lo que se prueba. Cada nivel tiene un objetivo diferente y encuentra tipos de defectos distintos. Estos niveles forman una pirámide donde cada uno construye sobre el anterior.
+
 ### 3.2.1 Nivel 1: Pruebas Unitarias (o de Componente)
 
 **Definición:** Verifican el funcionamiento correcto de las unidades más pequeñas de código de forma aislada.
@@ -1116,6 +1126,8 @@ def test_precio_negativo():
 ---
 
 ## 3.3 Mantenimiento de las Pruebas
+
+Hemos visto los niveles de prueba como si fueran un proceso lineal, pero en realidad el testing es **continuo**. El software evoluciona y las pruebas deben evolucionar con él. Este aspecto, a menudo olvidado, es crítico para mantener la efectividad del testing a lo largo del tiempo.
 
 ### 3.3.1 ¿Por qué es necesario el mantenimiento?
 
@@ -1358,6 +1370,8 @@ c) El proveedor de la API de geolocalización cambia el formato de respuesta
 
 # MÓDULO 4: TIPOS Y CLASIFICACIÓN DE PRUEBAS
 
+Ya conocemos cuándo probar (modelos de desarrollo) y a qué nivel probar (unitarias, integración, sistema, aceptación). Ahora necesitamos responder: **¿qué tipos de pruebas existen y cuándo usar cada una?** Este módulo nos proporciona un mapa completo de las diferentes clasificaciones.
+
 ## 4.1 Clasificación General
 
 Las pruebas se pueden clasificar según varios criterios ortogonales (una misma prueba puede pertenecer a varias categorías):
@@ -1457,6 +1471,8 @@ public void procesarDatos(String entrada) {
 
 ## 4.3 Pruebas de Caja Negra vs Caja Blanca
 
+Otra clasificación fundamental es según el **conocimiento que tenemos del código interno**. Esta distinción determina qué técnicas de diseño de pruebas podemos aplicar y es ortogonal a la anterior (podemos hacer pruebas dinámicas de caja negra o de caja blanca).
+
 ### 4.3.1 Pruebas de Caja Negra (Black Box)
 
 **Definición:** Pruebas basadas en requisitos y especificaciones, sin conocimiento del código interno.
@@ -1513,6 +1529,8 @@ def calcular_categoria(edad):
 **Ejemplo:** Conocer la estructura de la base de datos para diseñar mejores pruebas funcionales.
 
 ## 4.4 Pruebas Funcionales vs No Funcionales
+
+La última clasificación importante es según el **objetivo de la prueba**: ¿verificamos QUÉ hace el sistema o CÓMO lo hace? Esta distinción es crucial porque un software puede funcionar correctamente pero ser lento, inseguro o difícil de usar.
 
 ### 4.4.1 Pruebas Funcionales
 
@@ -1730,7 +1748,11 @@ b) Qué áreas cubrirían las pruebas de regresión prioritarias (5 áreas)
 
 # MÓDULO 5: TÉCNICAS DE DISEÑO DE PRUEBAS
 
+Ya conocemos los tipos de pruebas que existen. Ahora llega la pregunta más práctica: **¿cómo diseñamos los casos de prueba concretos?** No podemos probar todo (Principio 2), así que necesitamos técnicas sistemáticas que nos ayuden a seleccionar los casos más efectivos. Este módulo es el más práctico: aquí aprenderemos a crear pruebas reales.
+
 ## 5.1 El Proceso de Desarrollo de Pruebas
+
+Antes de ver las técnicas específicas, entendamos el proceso completo. El testing no es solo "ejecutar pruebas"; es un proceso estructurado con varias actividades.
 
 ### 5.1.1 Actividades del Proceso de Pruebas
 
@@ -1798,6 +1820,8 @@ Un caso de prueba bien documentado debe incluir:
 ---
 
 ## 5.2 Técnicas de Caja Negra
+
+Comenzamos con las técnicas de caja negra porque son las más utilizadas y no requieren conocimiento del código. Se basan únicamente en los requisitos y especificaciones, lo que las hace accesibles para cualquier tester.
 
 ### 5.2.1 Particiones de Equivalencia
 
@@ -1976,6 +2000,8 @@ Casos de prueba:
 
 ## 5.3 Técnicas de Caja Blanca
 
+Mientras las técnicas de caja negra se centran en "qué hace" el software, las de caja blanca se centran en "cómo lo hace". Requieren acceso al código y buscan garantizar que todas las partes del código se ejecutan al menos una vez.
+
 ### 5.3.1 Cobertura de Sentencias
 
 **Objetivo:** Ejecutar cada sentencia (línea) del código al menos una vez.
@@ -2042,6 +2068,8 @@ if (edad >= 18) AND (ingresos > 30000):
 ---
 
 ## 5.4 Técnicas Basadas en Experiencia
+
+Las técnicas de caja negra y blanca son sistemáticas y formales. Sin embargo, hay defectos que escapan a estas técnicas estructuradas. Las técnicas basadas en experiencia complementan a las anteriores aprovechando la intuición y el conocimiento acumulado del tester.
 
 ### 5.4.1 Pruebas Exploratorias
 
