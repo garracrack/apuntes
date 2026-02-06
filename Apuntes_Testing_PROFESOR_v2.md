@@ -1588,26 +1588,117 @@ La última clasificación importante es según el **objetivo de la prueba**: ¿v
 
 ## 4.5 Otros Tipos de Pruebas Importantes
 
-### 4.5.1 Pruebas de Regresión vs Re-testing
+### 4.5.1 Re-Pruebas (Re-testing) y Pruebas de Regresión
+
+Cuando se detecta un defecto y se corrige, son necesarios **dos tipos de pruebas** antes de dar por cerrado el bug:
+
+#### 🔄 Re-Pruebas (Re-testing / Confirmation Testing)
+
+**Re-testing** = Volver a ejecutar **exactamente los mismos casos de prueba** que detectaron el defecto original para **confirmar que la corrección funciona**.
+
+**Características:**
+- Es **obligatorio** tras cada corrección de bug
+- Se ejecutan **solo** los casos que fallaron
+- El objetivo es **confirmar** que el defecto ya no existe
+- También llamado "Confirmation Testing" (Pruebas de Confirmación)
+
+#### 🔍 Pruebas de Regresión
+
+**Regresión** = Ejecutar un **conjunto amplio de casos de prueba** para verificar que la corrección **no ha roto ninguna otra funcionalidad** que antes funcionaba.
+
+**Características:**
+- Es **muy recomendable** (a veces obligatorio) tras cambios
+- Se ejecutan **muchos** casos, no solo los relacionados con el bug
+- El objetivo es **detectar efectos secundarios** de los cambios
+- Ideal para **automatizar** (se ejecutan frecuentemente)
+
+#### 📊 Comparativa Detallada
 
 ```
 ┌─────────────────────────────────────────────────────────────────────────────┐
 │                    RE-TEST vs REGRESIÓN                                     │
 ├─────────────────────────────────────────────────────────────────────────────┤
 │                                                                             │
-│   RE-TEST                             REGRESIÓN                             │
-│   ───────                             ─────────                             │
+│   RE-TEST (Re-prueba)                 REGRESIÓN                             │
+│   ───────────────────                 ─────────                             │
 │                                                                             │
 │   Confirmar que el defecto            Verificar que el cambio no           │
-│   está corregido                      ha roto nada más                     │
+│   específico está corregido           ha roto nada más                     │
 │                                                                             │
-│   Solo el caso que falló              Conjunto amplio de casos             │
+│   Solo los casos que fallaron         Conjunto amplio de casos             │
 │                                                                             │
-│   Siempre obligatorio                 Muy recomendable                     │
-│   tras corrección                                                           │
+│   Siempre OBLIGATORIO                 Muy RECOMENDABLE                     │
+│   tras corrección                     (a veces obligatorio)                │
+│                                                                             │
+│   Ejecutado por QA que                Puede ser automatizado               │
+│   reportó el bug                      o manual                             │
+│                                                                             │
+│   Responde: "¿Se arregló?"            Responde: "¿Rompimos algo?"          │
 │                                                                             │
 └─────────────────────────────────────────────────────────────────────────────┘
 ```
+
+#### 🔄 Flujo de Trabajo Típico
+
+```
+  ┌─────────────────┐
+  │  Bug detectado  │
+  │  (TC-042 falla) │
+  └────────┬────────┘
+           ↓
+  ┌─────────────────┐
+  │  Se reporta el  │
+  │  defecto (Jira) │
+  └────────┬────────┘
+           ↓
+  ┌─────────────────┐
+  │  Desarrollador  │
+  │  corrige el bug │
+  └────────┬────────┘
+           ↓
+  ┌─────────────────┐
+  │   RE-TEST       │ ←── "¿TC-042 pasa ahora?"
+  │   (obligatorio) │
+  └────────┬────────┘
+           ↓
+       ¿Pasa?
+      /      \
+    Sí        No → Vuelve al desarrollador
+     ↓
+  ┌─────────────────┐
+  │   REGRESIÓN     │ ←── "¿Lo demás sigue funcionando?"
+  │   (recomendado) │
+  └────────┬────────┘
+           ↓
+       ¿Todo OK?
+      /      \
+    Sí        No → Nuevo bug (efecto secundario)
+     ↓
+  ┌─────────────────┐
+  │   Bug cerrado   │
+  │   ✅ Verificado │
+  └─────────────────┘
+```
+
+#### 💡 Ejemplo Práctico
+
+> **Escenario:** En una tienda online, se detecta que el descuento del 10% para clientes VIP no se aplica.
+>
+> **Bug:** TC-042 - "Descuento VIP no se aplica en el carrito"
+>
+> **Corrección:** El desarrollador arregla la función `calcularDescuento()`
+>
+> **Re-test:** 
+> - Ejecutar TC-042 de nuevo: Comprar como cliente VIP → ¿Se aplica el 10%?
+> - Si PASA → Continuar con regresión
+> - Si FALLA → Devolver al desarrollador
+>
+> **Regresión:**
+> - ¿Los descuentos por cantidad siguen funcionando?
+> - ¿Los cupones promocionales siguen funcionando?
+> - ¿El cálculo de IVA sigue correcto?
+> - ¿El proceso de pago completo funciona?
+> - ¿Los clientes NO-VIP no reciben el descuento por error?
 
 ### 4.5.2 Smoke Test (prueba de humo) vs Sanity Test (prueba de cordura)
 
