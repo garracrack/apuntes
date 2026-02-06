@@ -454,6 +454,8 @@ El estándar ISO/IEC 25010 define **8 características principales** de calidad:
 - Responsabilidad
 - Autenticidad
 
+> 🔧 **Práctica:** Veremos técnicas de **SQL Injection** para entender cómo los atacantes explotan vulnerabilidades y cómo prevenirlas en nuestro código.
+
 **7. MANTENIBILIDAD**
 ¿Es fácil de modificar?
 - Modularidad
@@ -806,6 +808,8 @@ Calcula: a) El ahorro total b) El ROI del testing
 │               │ • Seguridad    │            │ • Canary release │           │
 │               └────────────────┘            └──────────────────┘           │
 │                                                                             │
+│   🔧 Herramientas que usaremos: Postman (APIs), utPLSQL (BD), HammerDB    │
+│                                                                             │
 │   Características:                                                          │
 │   • Todo automatizado                                                       │
 │   • Feedback en minutos                                                     │
@@ -905,6 +909,8 @@ Calcula: a) El ahorro total b) El ROI del testing
 | **Técnicas** | Principalmente caja blanca |
 | **Automatización** | Casi siempre automatizadas |
 
+> 🔧 **Herramienta práctica:** Para pruebas unitarias en bases de datos Oracle, utilizaremos **utPLSQL**, un framework que permite escribir y ejecutar tests directamente en PL/SQL.
+
 **Ejemplo de prueba unitaria:**
 ```python
 def calcular_descuento(precio, porcentaje):
@@ -941,6 +947,8 @@ def test_precio_negativo():
 | **¿Cuándo?** | Después de las pruebas unitarias |
 | **Objetivo** | Detectar problemas de comunicación |
 
+> 🔧 **Herramienta práctica:** **Postman** es ideal para probar la integración entre componentes a través de APIs REST. Permite verificar que los servicios se comunican correctamente.
+
 **Problemas típicos de integración:**
 - Formato de datos incompatible
 - Orden de parámetros diferente
@@ -972,6 +980,8 @@ def test_precio_negativo():
 - Seguridad
 - Usabilidad
 - Compatibilidad
+
+> 🔧 **Herramienta práctica:** Para pruebas de rendimiento en bases de datos utilizaremos **HammerDB**, que permite simular cargas de trabajo realistas y medir tiempos de respuesta.
 
 ### 3.2.4 Nivel 4: Pruebas de Aceptación
 
@@ -1208,6 +1218,8 @@ public void procesarDatos(String entrada) {
 }
 ```
 
+> 🔒 **Práctica de seguridad:** Este ejemplo muestra una vulnerabilidad de **SQL Injection**. Practicaremos cómo detectar y explotar estas vulnerabilidades para aprender a prevenirlas.
+
 ### 4.2.2 Pruebas Dinámicas
 
 **Definición:** Requieren **ejecutar** el software con datos de prueba y comparar resultados.
@@ -1324,6 +1336,8 @@ def calcular_categoria(edad):
 | **Usabilidad** | ¿Es fácil de usar? | "Completar compra en < 3 clics" |
 | **Fiabilidad** | ¿Es estable? | "Disponible 99.9%" |
 | **Portabilidad** | ¿Dónde funciona? | "Chrome, Firefox, Safari" |
+
+> 🔧 **Herramientas prácticas:** Para pruebas de rendimiento, carga y estrés en bases de datos usaremos **HammerDB**. Para pruebas de seguridad, practicaremos técnicas de **SQL Injection**.
 
 ### 4.4.3 Comparación Visual
 
@@ -1497,7 +1511,7 @@ El testing no es solo "ejecutar pruebas". Es un proceso completo con varias acti
 │                                                                             │
 │   4. IMPLEMENTACIÓN                                                         │
 │      • Preparar scripts y herramientas                                      │
-│      • Crear datos de prueba                                                │
+│      • Crear datos de prueba (🔧 **Mockaroo** facilita esta tarea)         │
 │      • Configurar entorno                                                   │
 │                                                                             │
 │   5. EJECUCIÓN                                                              │
@@ -1542,6 +1556,8 @@ Un caso de prueba bien documentado debe incluir:
 **Concepto:** Dividir el dominio de entrada en grupos (particiones) donde todos los valores de un grupo deberían comportarse de la misma manera. Probar un valor de cada partición es representativo de todo el grupo.
 
 **Objetivo:** Reducir el número de casos de prueba sin perder efectividad.
+
+> 🔧 **Herramienta práctica:** **Mockaroo** permite generar grandes volúmenes de datos de prueba realistas para cada partición de equivalencia de forma automática.
 
 **Ejemplo:**
 ```
@@ -1839,6 +1855,8 @@ if (edad >= 18) AND (ingresos > 30000):
 □ Funciona con teclado (sin ratón)
 □ Accesible para lectores de pantalla
 ```
+
+> 🔧 **Herramienta práctica:** **Postman** permite crear colecciones de pruebas con checklists automatizados para APIs, ejecutándolas de forma repetible y documentada.
 
 ---
 
