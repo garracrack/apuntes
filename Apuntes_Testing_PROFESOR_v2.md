@@ -502,6 +502,56 @@ Es fundamental entender la diferencia entre estos dos conceptos:
 └─────────────────────────────────────────────────────────────────────────────┘
 ```
 
+### 2.2.1 Clasificación de las Medidas de Aseguramiento de Calidad
+
+Las medidas de aseguramiento de la calidad se pueden clasificar según su **enfoque** y su **naturaleza**:
+
+```
+┌─────────────────────────────────────────────────────────────────────────────┐
+│              MEDIDAS DE ASEGURAMIENTO DE LA CALIDAD                         │
+├─────────────────────────────────────────────────────────────────────────────┤
+│                                                                             │
+│   ◄── PROACTIVAS ──────────────────┬────────────────── REACTIVAS ──►        │
+│       (Evitar errores)             │              (Detectar errores)        │
+│                                    │                                        │
+│   "Los errores que no se           │   "El descubrimiento de errores        │
+│    cometen no necesitan            │    sirve para corregir defectos        │
+│    ser corregidos"                 │    y elevar la calidad"                │
+│                                    │                                        │
+│   ┌────────────────────────────────┴────────────────────────────────┐      │
+│   │                                                                  │      │
+│   │          CONSTRUCTIVAS              │         ANALÍTICAS         │      │
+│   │                                     │                            │      │
+│   ├─────────────┬───────────────────────┼──────────────┬─────────────┤      │
+│   │  TÉCNICAS   │   ORGANIZATIVAS       │  ESTÁTICAS   │  DINÁMICAS  │      │
+│   ├─────────────┼───────────────────────┼──────────────┼─────────────┤      │
+│   │             │                       │              │             │      │
+│   │ • Métodos   │ • Directrices         │ • Revisiones │ • Pruebas   │      │
+│   │ • Plantillas│ • Estándares          │ • Análisis   │   Caja      │      │
+│   │ • Herram.   │ • Checklists          │   de código  │   Blanca    │      │
+│   │   de diseño │ • Guías de estilo     │ • Análisis   │ • Pruebas   │      │
+│   │ • Patrones  │ • Procesos definidos  │   de flujo   │   Caja      │      │
+│   │             │                       │ • Inspección │   Negra     │      │
+│   │             │                       │              │ • Basadas   │      │
+│   │             │                       │              │   en exp.   │      │
+│   └─────────────┴───────────────────────┴──────────────┴─────────────┘      │
+│                                                                             │
+│   ─────────────────────────────────────────────────────────────────────     │
+│   PREVENCIÓN (antes de crear)          DETECCIÓN (después de crear)         │
+│                                                                             │
+└─────────────────────────────────────────────────────────────────────────────┘
+```
+
+**Medidas PROACTIVAS (Constructivas):** Buscan **evitar** que los errores se introduzcan.
+- **Técnicas:** Uso de métodos, plantillas, herramientas y patrones de diseño probados.
+- **Organizativas:** Establecimiento de directrices, estándares de codificación, checklists y procesos.
+
+**Medidas REACTIVAS (Analíticas):** Buscan **detectar** los errores ya introducidos.
+- **Estáticas:** Revisiones, análisis de código, análisis de flujo (sin ejecutar el software).
+- **Dinámicas:** Pruebas de caja blanca, caja negra y basadas en experiencia (ejecutando el software).
+
+> 💡 **Clave:** Un buen programa de calidad combina **ambos enfoques**. Es más barato prevenir errores que encontrarlos y corregirlos después.
+
 ## 2.3 El Coste de la Calidad
 
 ### 2.3.1 Tipos de Costes
