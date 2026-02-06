@@ -32,7 +32,7 @@ Los errores de software no son simplemente molestias técnicas. Pueden tener con
 
 **Consecuencias Legales:**
 - Demandas por daños y perjuicios
-- Sanciones por incumplimiento de normativas (GDPR, PCI-DSS, etc.)
+- Sanciones por incumplimiento de normativas (GDPR -Reglamento General de Protección de Datos-, PCI-DSS -estándar de seguridad para tarjetas de pago-, etc.)
 - Responsabilidades civiles o incluso penales en casos graves
 
 **Consecuencias Humanas (en sistemas críticos):**
@@ -61,7 +61,7 @@ El testing no es simplemente "probar cosas para ver si funcionan". Es una discip
 
 - **Fundamentos teóricos** basados en matemáticas, lógica y estadística
 - **Metodologías estructuradas** desarrolladas durante décadas
-- **Certificaciones internacionales** reconocidas (ISTQB, CSTE, etc.)
+- **Certificaciones internacionales** reconocidas (ISTQB -International Software Testing Qualifications Board-, CSTE -Certified Software Tester-, etc.)
 - **Herramientas especializadas** para diferentes tipos de pruebas
 - **Roles profesionales específicos** con habilidades diferenciadas
 
@@ -94,7 +94,7 @@ Estos tres términos son absolutamente fundamentales en el mundo del testing. Au
 - Errores por desconocimiento técnico
 - Errores por fatiga o presión
 
-### 1.2.2 DEFECTO (Bug / Defect / Fault)
+### 1.2.2 DEFECTO (Bug -bicho, error- / Defect / Fault)
 
 **Definición:** Un defecto es una **imperfección en el software** que puede causar que el sistema falle. Es la manifestación del error en el código o documentación.
 
@@ -148,7 +148,7 @@ Estos tres términos son absolutamente fundamentales en el mundo del testing. Au
 
 ---
 
-## 1.3 Los 7 Principios Fundamentales del Testing (ISTQB)
+## 1.3 Los 7 Principios Fundamentales del Testing (ISTQB - International Software Testing Qualifications Board)
 
 Estos principios son verdades universales del testing que guían las decisiones sobre cómo, cuándo y cuánto probar.
 
@@ -208,10 +208,10 @@ Total = Número astronómico (más que átomos en el universo)
    Producción                  100-1000x        
 ```
 
-**Shift Left Testing:** Mover el testing hacia la izquierda (más temprano):
+**Shift Left Testing (desplazar las pruebas hacia la izquierda):** Mover el testing hacia fases más tempranas del ciclo de desarrollo:
 - Revisar requisitos buscando ambigüedades
 - Revisar diseños antes de implementar
-- TDD (Test-Driven Development)
+- TDD (Test-Driven Development - Desarrollo guiado por pruebas: escribir el test antes que el código)
 - Integración continua con pruebas automatizadas
 
 ### Principio 4: Los Defectos Se Agrupan (Clustering)
@@ -387,13 +387,13 @@ La respuesta es: **TODAS las anteriores**, y más. La calidad del software es un
 
 Según el estándar **ISO/IEC 25010**, la calidad del software se define como:
 
-> "El grado en que un sistema de software satisface las necesidades declaradas e implícitas de sus distintos stakeholders, proporcionando así valor."
+> "El grado en que un sistema de software satisface las necesidades declaradas e implícitas de sus distintos stakeholders (partes interesadas), proporcionando así valor."
 
 Esta definición nos dice varias cosas importantes:
 1. **Grado:** La calidad no es binaria (tiene/no tiene), sino gradual
 2. **Necesidades declaradas:** Lo que el cliente pidió explícitamente
 3. **Necesidades implícitas:** Lo que el cliente espera aunque no lo dijo
-4. **Stakeholders:** No solo el usuario final, también desarrolladores, operadores, etc.
+4. **Stakeholders (partes interesadas):** No solo el usuario final, también desarrolladores, operadores, etc.
 5. **Valor:** La calidad debe aportar valor real
 
 ### 2.1.3 Modelo de Calidad ISO/IEC 25010
@@ -550,7 +550,7 @@ Las medidas de aseguramiento de la calidad se pueden clasificar según su **enfo
 
 **Medidas PROACTIVAS (Constructivas):** Buscan **evitar** que los errores se introduzcan.
 - **Técnicas:** Uso de métodos, plantillas, herramientas y patrones de diseño probados.
-- **Organizativas:** Establecimiento de directrices, estándares de codificación, checklists y procesos.
+- **Organizativas:** Establecimiento de directrices, estándares de codificación, checklists (listas de verificación) y procesos.
 
 **Medidas REACTIVAS (Analíticas):** Buscan **detectar** los errores ya introducidos.
 - **Estáticas:** Revisiones, análisis de código, análisis de flujo (sin ejecutar el software).
@@ -760,14 +760,14 @@ El modelo de desarrollo determina cuándo se realizan las pruebas, quién las ha
 │                                                                             │
 │   • Cada iteración produce una versión funcional                           │
 │   • El testing ocurre en cada iteración                                     │
-│   • Feedback rápido y adaptación continua                                   │
+│   • Feedback (retroalimentación) rápido y adaptación continua               │
 │                                                                             │
 └─────────────────────────────────────────────────────────────────────────────┘
 ```
 
 ### 3.1.4 Metodologías Ágiles (Scrum)
 
-**Descripción:** Framework que estructura el trabajo en Sprints (iteraciones de 2-4 semanas).
+**Descripción:** Framework (marco de trabajo) que estructura el trabajo en Sprints (ciclos de trabajo de 2-4 semanas donde se entrega un incremento funcional).
 
 ```
 ┌─────────────────────────────────────────────────────────────────────────────┐
@@ -799,13 +799,13 @@ El modelo de desarrollo determina cuándo se realizan las pruebas, quién las ha
 └─────────────────────────────────────────────────────────────────────────────┘
 ```
 
-### 3.1.5 DevOps e Integración Continua
+### 3.1.5 DevOps (Development + Operations) e Integración Continua
 
-**Descripción:** Cultura y prácticas que unifican desarrollo y operaciones para entregas continuas.
+**Descripción:** Cultura y prácticas que unifican desarrollo (Dev) y operaciones (Ops) para entregas continuas.
 
 ```
 ┌─────────────────────────────────────────────────────────────────────────────┐
-│                    PIPELINE CI/CD                                           │
+│            PIPELINE CI/CD (Integración Continua / Despliegue Continuo)      │
 ├─────────────────────────────────────────────────────────────────────────────┤
 │                                                                             │
 │   CODE ──► BUILD ──► TEST ──► RELEASE ──► DEPLOY ──► MONITOR               │
@@ -815,9 +815,11 @@ El modelo de desarrollo determina cuándo se realizan las pruebas, quién las ha
 │               │ Pruebas Auto   │            │ Monitorización   │           │
 │               │ • Unitarias    │            │ • Logs           │           │
 │               │ • Integración  │            │ • Métricas       │           │
-│               │ • E2E          │            │ • Alertas        │           │
-│               │ • Rendimiento  │            │ • A/B Testing    │           │
-│               │ • Seguridad    │            │ • Canary release │           │
+│               │ • E2E (End to │            │ • Alertas        │           │
+│               │   End, punta  │            │ • A/B Testing    │           │
+│               │   a punta)    │            │ • Canary release │           │
+│               │ • Rendimiento  │            │   (despliegue   │           │
+│               │ • Seguridad    │            │   gradual)      │           │
 │               └────────────────┘            └──────────────────┘           │
 │                                                                             │
 │   🔧 Herramientas que usaremos: Postman (APIs), utPLSQL (BD), HammerDB    │
@@ -866,7 +868,7 @@ El modelo de desarrollo determina cuándo se realizan las pruebas, quién las ha
 | **Modelo en V** | Software crítico (médico, aeronáutico), necesitas trazabilidad total | Necesitas flexibilidad y entregas rápidas |
 | **Iterativo** | Proyectos medianos, algo de incertidumbre | El cliente quiere todo definido desde el inicio |
 | **Ágil (Scrum)** | Requisitos cambiantes, feedback frecuente, startups | Cliente no disponible, equipo no preparado |
-| **DevOps/CI-CD** | Entregas continuas, SaaS, web apps | Entornos muy regulados, equipos pequeños sin infraestructura |
+| **DevOps/CI-CD** | Entregas continuas, SaaS (Software as a Service -software como servicio en la nube-), web apps | Entornos muy regulados, equipos pequeños sin infraestructura |
 
 ```
 ┌─────────────────────────────────────────────────────────────────────────────┐
@@ -946,9 +948,9 @@ def test_precio_negativo():
         calcular_descuento(-50, 20)
 ```
 
-**Mocks y Stubs:** Para aislar la unidad de sus dependencias:
-- **Stub:** Proporciona respuestas predefinidas
-- **Mock:** Además verifica que se llamó correctamente
+**Mocks y Stubs (objetos simulados):** Para aislar la unidad de sus dependencias:
+- **Stub (sustituto):** Proporciona respuestas predefinidas
+- **Mock (simulacro):** Además verifica que se llamó correctamente
 
 ### 3.2.2 Nivel 2: Pruebas de Integración
 
@@ -1012,10 +1014,10 @@ def test_precio_negativo():
 
 | Tipo | Objetivo | Quién |
 |------|----------|-------|
-| **UAT** (User Acceptance) | Usuarios pueden hacer su trabajo | Usuarios finales |
-| **BAT** (Business Acceptance) | Cumple objetivos de negocio | Stakeholders |
-| **OAT** (Operational Acceptance) | Se puede operar y mantener | Equipo de operaciones |
-| **Alpha** | Feedback interno | Empleados |
+| **UAT** (User Acceptance Testing - Pruebas de aceptación de usuario) | Usuarios pueden hacer su trabajo | Usuarios finales |
+| **BAT** (Business Acceptance Testing - Pruebas de aceptación de negocio) | Cumple objetivos de negocio | Stakeholders (partes interesadas) |
+| **OAT** (Operational Acceptance Testing - Pruebas de aceptación operativa) | Se puede operar y mantener | Equipo de operaciones |
+| **Alpha (alfa)** | Feedback (retroalimentación) interno | Empleados |
 | **Beta** | Feedback externo | Usuarios seleccionados |
 | **Contractual** | Cumple el contrato | Cliente |
 | **Compliance** | Cumple regulaciones | Auditores |
@@ -1210,8 +1212,8 @@ Las pruebas se pueden clasificar según varios criterios ortogonales (una misma 
 | Técnica | Formalidad | Descripción |
 |---------|------------|-------------|
 | **Revisión Informal** | Muy baja | Un compañero lee tu código |
-| **Walkthrough** | Baja | El autor presenta y explica su trabajo |
-| **Revisión Técnica** | Media | Checklist, criterios definidos |
+| **Walkthrough (recorrido)** | Baja | El autor presenta y explica su trabajo |
+| **Revisión Técnica** | Media | Checklist (lista de verificación), criterios definidos |
 | **Inspección** | Alta | Proceso formal con roles definidos |
 | **Análisis Estático** | Automatizada | Herramientas (linters, analizadores) |
 
@@ -1407,12 +1409,12 @@ La última clasificación importante es según el **objetivo de la prueba**: ¿v
 └─────────────────────────────────────────────────────────────────────────────┘
 ```
 
-### 4.5.2 Smoke Test vs Sanity Test
+### 4.5.2 Smoke Test (prueba de humo) vs Sanity Test (prueba de cordura)
 
 | Tipo | Objetivo | Amplitud | Cuándo |
 |------|----------|----------|--------|
-| **Smoke Test** | ¿Funciona lo básico? | Amplio pero superficial | Cada nueva build |
-| **Sanity Test** | ¿Funciona esta área? | Estrecho pero profundo | Tras cambios específicos |
+| **Smoke Test** (prueba de humo - ver si "echa humo" al encenderlo) | ¿Funciona lo básico? | Amplio pero superficial | Cada nueva build (compilación) |
+| **Sanity Test** (prueba de cordura - ver si tiene sentido) | ¿Funciona esta área? | Estrecho pero profundo | Tras cambios específicos |
 
 **Ejemplo de Smoke Test para e-commerce:**
 1. ¿La aplicación arranca?
