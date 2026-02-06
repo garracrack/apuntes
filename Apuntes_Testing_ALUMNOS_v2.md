@@ -637,15 +637,6 @@ f) Implementar pair programming
 
 ---
 
-**EJERCICIO 3:**
-Una empresa invierte 40.000€ en testing para un proyecto. Los defectos detectados habrían causado en producción: pérdidas de ventas (120.000€), compensaciones (35.000€) y corrección de emergencia (45.000€).
-
-Calcula: a) El ahorro total b) El ROI del testing
-
-*Espacio para tu respuesta:*
-
----
-
 # MÓDULO 3: EL TESTING EN EL CICLO DE VIDA DEL SOFTWARE
 
 Ya sabemos qué es la calidad y por qué es importante invertir en ella. Pero, **¿cuándo y cómo debemos realizar el testing?** La respuesta depende del modelo de desarrollo que utilicemos. En este módulo veremos cómo el testing se integra de forma diferente según la metodología elegida.

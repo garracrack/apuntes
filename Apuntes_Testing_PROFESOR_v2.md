@@ -702,32 +702,6 @@ f) **QA** - El pair programming es preventivo, dos personas trabajando juntas pr
 
 ---
 
-**EJERCICIO 3:**
-Una empresa invierte 40.000€ en testing para un proyecto. Los defectos detectados habrían causado en producción: pérdidas de ventas (120.000€), compensaciones (35.000€) y corrección de emergencia (45.000€).
-
-Calcula: a) El ahorro total b) El ROI del testing
-
-**✅ SOLUCIÓN:**
-
-a) **Ahorro total:**
-   - Pérdidas de ventas evitadas: 120.000€
-   - Compensaciones evitadas: 35.000€
-   - Corrección de emergencia evitada: 45.000€
-   - **Total evitado = 120.000 + 35.000 + 45.000 = 200.000€**
-
-b) **ROI del testing:**
-   ```
-   ROI = (Beneficio - Inversión) / Inversión × 100
-   ROI = (200.000 - 40.000) / 40.000 × 100
-   ROI = 160.000 / 40.000 × 100
-   ROI = 4 × 100
-   ROI = 400%
-   ```
-   
-   **Por cada euro invertido en testing, se ahorraron 4€** (o dicho de otra manera, el retorno fue del 400%).
-
----
-
 # MÓDULO 3: EL TESTING EN EL CICLO DE VIDA DEL SOFTWARE
 
 Ya sabemos qué es la calidad y por qué es importante invertir en ella. Pero, **¿cuándo y cómo debemos realizar el testing?** La respuesta depende del modelo de desarrollo que utilicemos. En este módulo veremos cómo el testing se integra de forma diferente según la metodología elegida.
