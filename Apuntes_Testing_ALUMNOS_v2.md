@@ -1446,7 +1446,12 @@ Cuando integramos módulos, algunos pueden no estar disponibles todavía. Necesi
 - **BD (Base de Datos):** Almacena y recupera datos de forma persistente.
 - **API (Application Programming Interface):** Interfaz para comunicarse con sistemas externos (servicios de terceros, otras aplicaciones).
 
-**Las flechas representan las llamadas entre componentes:** La GUI llama al Controlador → el Controlador llama a los Servicios → los Servicios acceden a la BD o llaman a APIs externas. En **Top-Down** empezamos probando desde la GUI hacia abajo (usando STUBS para simular lo que aún no existe). En **Bottom-Up** empezamos probando BD/APIs hacia arriba (usando DRIVERS para simular las llamadas desde arriba).
+**Las flechas representan las llamadas entre componentes:** La GUI llama al Controlador → el Controlador llama a los Servicios → los Servicios acceden a la BD o llaman a APIs externas.
+
+**¿Cuándo se usan STUBS y DRIVERS?** Solo cuando **no está todo implementado todavía**:
+- **Top-Down:** Si empiezas probando la GUI pero los servicios/BD aún no están desarrollados, usas **STUBS** para simular esas partes inferiores.
+- **Bottom-Up:** Si empiezas probando la BD/servicios pero la GUI/controlador aún no existen, usas **DRIVERS** para simular las llamadas desde arriba.
+- **Si todo está implementado:** No necesitas simular nada, pruebas la integración real directamente.
 
 #### ¿Qué estrategia elegir?
 
