@@ -1470,18 +1470,6 @@ Cuando integramos módulos, algunos pueden no estar disponibles todavía. Necesi
 │     ├── ✅ Sin tiempos muertos, desarrollo ágil                             │
 │     └── ❌ Puede necesitar stubs y drivers según el caso                    │
 │                                                                             │
-│  6. ORIENTADA AL PROCESO DE NEGOCIO                                         │
-│     ├── Integración guiada por procesos de negocio                          │
-│     ├── Pruebas End-to-End por flujo de negocio                             │
-│     ├── ✅ Enfocada en el valor para el usuario                             │
-│     └── ❌ Puede requerir stubs y drivers                                   │
-│                                                                             │
-│  7. ORIENTADA A FUNCIONES                                                   │
-│     ├── Se orienta a una función específica del sistema                     │
-│     ├── Se integra cada componente necesitado por esa función               │
-│     ├── ✅ Permite demos funcionales tempranas                              │
-│     └── ❌ Otras funciones se prueban más tarde                             │
-│                                                                             │
 └─────────────────────────────────────────────────────────────────────────────┘
 ```
 
@@ -1509,6 +1497,16 @@ Cuando integramos módulos, algunos pueden no estar disponibles todavía. Necesi
                (simula lo de abajo)               (simula lo de arriba)
 ```
 
+**Explicación de los componentes de la arquitectura:**
+
+- **GUI (Graphical User Interface):** La interfaz gráfica que ve el usuario (páginas web, ventanas, formularios). Es la "cara" de la aplicación.
+- **Controlador:** Recibe las peticiones del usuario desde la GUI, las procesa y decide qué hacer. Coordina el flujo de la aplicación.
+- **Servicio:** Contiene la lógica de negocio (cálculos, validaciones, reglas). Es donde está la "inteligencia" de la aplicación.
+- **BD (Base de Datos):** Almacena y recupera datos de forma persistente.
+- **API (Application Programming Interface):** Interfaz para comunicarse con sistemas externos (servicios de terceros, otras aplicaciones).
+
+**Las flechas representan las llamadas entre componentes:** La GUI llama al Controlador → el Controlador llama a los Servicios → los Servicios acceden a la BD o llaman a APIs externas. En **Top-Down** empezamos probando desde la GUI hacia abajo (usando STUBS para simular lo que aún no existe). En **Bottom-Up** empezamos probando BD/APIs hacia arriba (usando DRIVERS para simular las llamadas desde arriba).
+
 #### ¿Qué estrategia elegir?
 
 | Situación | Estrategia recomendada | Razón |
@@ -1520,8 +1518,6 @@ Cuando integramos módulos, algunos pueden no estar disponibles todavía. Necesi
 | Software de terceros/Frameworks | Top-Down | Integración con código ajeno |
 | Desarrollo ágil, sprints cortos | Ad-Hoc | Sin tiempos muertos |
 | Proyecto con alto riesgo | Híbrida | Equilibra velocidad y calidad |
-| Flujos de negocio complejos | Orientada al proceso de negocio | Pruebas End-to-End por proceso |
-| Demostración de funcionalidad específica | Orientada a funciones | Permite demos funcionales tempranas |
 
 > 💡 **Consejo estratégico:** Lo ideal es **adaptar la estrategia** para optimizar riesgos o recursos:
 > - **Estrategias mixtas:** Un equipo puede usar Top-Down (empezando por la GUI), mientras otros equipos usan Bottom-Up

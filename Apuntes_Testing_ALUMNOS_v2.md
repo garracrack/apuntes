@@ -1406,15 +1406,6 @@ Cuando integramos módulos, algunos pueden no estar disponibles todavía. Necesi
 │     ├── ❌ Puede necesitar stubs y drivers según el caso                    │
 │     └── Puede combinarse con otras estrategias                             │
 │                                                                             │
-│  6. ORIENTADA AL PROCESO DE NEGOCIO                                         │
-│     ├── La integración se lleva a cabo por procesos de negocio              │
-│     ├── Pruebas End-to-End                                                  │
-│     └── Pueden hacer uso de drivers y stubs                                │
-│                                                                             │
-│  7. ORIENTADA A FUNCIONES                                                   │
-│     ├── La integración se orienta a una función del sistema escogida        │
-│     └── Se integra cada componente necesitado por esa función              │
-│                                                                             │
 └─────────────────────────────────────────────────────────────────────────────┘
 ```
 
@@ -1446,6 +1437,16 @@ Cuando integramos módulos, algunos pueden no estar disponibles todavía. Necesi
                Usa STUBS                          Usa DRIVERS
                (simula lo de abajo)               (simula lo de arriba)
 ```
+
+**Explicación de los componentes de la arquitectura:**
+
+- **GUI (Graphical User Interface):** La interfaz gráfica que ve el usuario (páginas web, ventanas, formularios). Es la "cara" de la aplicación.
+- **Controlador:** Recibe las peticiones del usuario desde la GUI, las procesa y decide qué hacer. Coordina el flujo de la aplicación.
+- **Servicio:** Contiene la lógica de negocio (cálculos, validaciones, reglas). Es donde está la "inteligencia" de la aplicación.
+- **BD (Base de Datos):** Almacena y recupera datos de forma persistente.
+- **API (Application Programming Interface):** Interfaz para comunicarse con sistemas externos (servicios de terceros, otras aplicaciones).
+
+**Las flechas representan las llamadas entre componentes:** La GUI llama al Controlador → el Controlador llama a los Servicios → los Servicios acceden a la BD o llaman a APIs externas. En **Top-Down** empezamos probando desde la GUI hacia abajo (usando STUBS para simular lo que aún no existe). En **Bottom-Up** empezamos probando BD/APIs hacia arriba (usando DRIVERS para simular las llamadas desde arriba).
 
 #### ¿Qué estrategia elegir?
 
