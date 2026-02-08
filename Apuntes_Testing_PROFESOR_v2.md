@@ -1516,7 +1516,7 @@ Cuando integramos módulos, algunos pueden no estar disponibles todavía. Necesi
 
 | Situación | Estrategia recomendada | Razón |
 |-----------|------------------------|-------|
-| Proyecto pequeño, evolutivo | Big Bang | Simple, poco overhead |
+| Proyecto pequeño, evolutivo | Big Bang | Simple, sin STUBS/DRIVERS ni coordinación |
 | Interfaz de usuario prioritaria | Top-Down | Permite demos tempranas |
 | Lógica de negocio crítica | Bottom-Up | Asegura cálculos correctos |
 | Equipos grandes distribuidos | Bottom-Up o Híbrida | Trabajo paralelo |
