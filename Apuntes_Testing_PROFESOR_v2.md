@@ -1,6 +1,6 @@
 # APUNTES COMPLETOS DE TESTING DE SOFTWARE
 ## Curso de Técnico en Testing y Ciberseguridad Aplicada
-### Versión para Alumnos (v2 - Reorganizada)
+### Versión para Profesor con Soluciones (v2 - Reorganizada)
 
 ---
 
@@ -666,9 +666,9 @@ En testing se distingue entre verificación y validación porque ayudan a evitar
 
 ---
 
-## 1.4 Ejercicios del Módulo 1
+## 1.4 Ejercicios del Módulo 1 - CON SOLUCIONES
 
-> 📝 **Nota:** Los ejercicios de Error/Defecto/Fallo se encuentran en la sección 1.2.6
+> 📝 **Nota:** Los ejercicios de Error/Defecto/Fallo (Ejercicios 1-4 de la sección 1.2.6) tienen sus soluciones en esa misma sección.
 
 ---
 
@@ -681,14 +681,38 @@ c) "Las pruebas las haremos cuando el desarrollo esté completamente terminado"
 d) "Usamos exactamente los mismos casos de prueba desde hace 3 años"
 e) "Aplicamos la misma estrategia de testing para nuestra app móvil que para el software del marcapasos"
 
-*Espacio para tu respuesta:*
+**✅ SOLUCIÓN:**
+
+a) **Principio 1: Las pruebas muestran la presencia de defectos, no su ausencia.** Que no encontremos defectos no significa que no existan. Solo significa que las pruebas ejecutadas no los detectaron.
+
+b) **Principio 2: Las pruebas exhaustivas son imposibles.** Es matemáticamente imposible probar todas las combinaciones. Hay que usar técnicas como particiones de equivalencia y valores límite.
+
+c) **Principio 3: Las pruebas tempranas ahorran tiempo y dinero.** Esperar al final significa que los defectos encontrados serán mucho más costosos de corregir. El testing debe comenzar desde la fase de requisitos.
+
+d) **Principio 5: Paradoja del pesticida.** Si usamos siempre los mismos casos de prueba, dejarán de encontrar nuevos defectos. Hay que revisarlos, actualizarlos y añadir nuevos.
+
+e) **Principio 6: Las pruebas dependen del contexto.** El nivel de rigor, documentación, técnicas y estrategias debe adaptarse al contexto. Un software médico crítico requiere un enfoque completamente diferente a una app de entretenimiento.
 
 ---
 
 **EJERCICIO 2:**
 Explica con tus propias palabras la diferencia entre Verificación y Validación. Pon un ejemplo de un sistema que pase la verificación pero falle la validación.
 
-*Espacio para tu respuesta:*
+**✅ SOLUCIÓN:**
+
+**Diferencia:**
+- **Verificación:** Comprueba que el producto se ha construido CORRECTAMENTE según las especificaciones. Responde a: "¿Estamos construyendo el producto bien?"
+- **Validación:** Comprueba que se ha construido el producto CORRECTO, el que realmente necesita el usuario. Responde a: "¿Estamos construyendo el producto correcto?"
+
+**Ejemplo clásico:**
+Una empresa desarrolla un sistema de gestión de inventario siguiendo exactamente las especificaciones escritas hace 2 años:
+- **Verificación:** ✓ PASA - El sistema cumple al 100% con las especificaciones documentadas. Todas las funciones especificadas funcionan correctamente.
+- **Validación:** ✗ FALLA - Cuando los usuarios del almacén empiezan a usarlo, descubren que:
+  - El proceso de entrada de productos tiene demasiados pasos
+  - No permite escanear códigos de barras, que ahora todos usan
+  - Los informes que genera no son los que la dirección necesita
+  
+El sistema hace exactamente lo que se especificó, pero esas especificaciones ya no reflejan lo que los usuarios realmente necesitan.
 
 ---
 
@@ -885,10 +909,6 @@ Las medidas de aseguramiento de la calidad se pueden clasificar según su **enfo
 - **Técnicas:** Uso de métodos, plantillas, herramientas y patrones de diseño probados.
 - **Organizativas:** Establecimiento de directrices, estándares de codificación, checklists (listas de verificación) y procesos.
 
-**Medidas PROACTIVAS (Constructivas):** Buscan **evitar** que los errores se introduzcan.
-- **Técnicas:** Uso de métodos, plantillas, herramientas y patrones de diseño probados.
-- **Organizativas:** Establecimiento de directrices, estándares de codificación, checklists (listas de verificación) y procesos.
-
 **Medidas REACTIVAS (Analíticas):** Buscan **detectar** los errores ya introducidos.
 - **Estáticas:** Revisiones, análisis de código, análisis de flujo (sin ejecutar el software).
 - **Dinámicas:** Pruebas de caja blanca, caja negra y basadas en experiencia (ejecutando el software).
@@ -1015,7 +1035,7 @@ Por cada euro invertido en testing, se ahorraron 4,20€.
 
 ---
 
-## 2.4 Ejercicios del Módulo 2
+## 2.4 Ejercicios del Módulo 2 - CON SOLUCIONES
 
 ---
 
@@ -1027,7 +1047,22 @@ Un sistema tiene los siguientes requisitos no funcionales:
 
 ¿A qué característica de calidad del modelo ISO/IEC 25010 corresponde cada uno?
 
-*Espacio para tu respuesta:*
+**✅ SOLUCIÓN:**
+
+1. **"El sistema debe estar disponible 99.9% del tiempo"**
+   → **FIABILIDAD** (subcaracterística: Disponibilidad)
+   
+   La disponibilidad mide el porcentaje de tiempo que el sistema está operativo y accesible cuando se necesita.
+
+2. **"Las páginas deben cargar en menos de 2 segundos"**
+   → **EFICIENCIA DE RENDIMIENTO** (subcaracterística: Comportamiento temporal)
+   
+   El comportamiento temporal se refiere a los tiempos de respuesta y procesamiento del sistema.
+
+3. **"El sistema debe soportar 5.000 usuarios concurrentes"**
+   → **EFICIENCIA DE RENDIMIENTO** (subcaracterística: Capacidad)
+   
+   La capacidad se refiere a los límites máximos que puede manejar el sistema (usuarios, transacciones, datos, etc.).
 
 ---
 
@@ -1041,7 +1076,19 @@ d) Revisar el código de un compañero
 e) Realizar pruebas exploratorias
 f) Implementar pair programming
 
-*Espacio para tu respuesta:*
+**✅ SOLUCIÓN:**
+
+a) **QA** - La formación es una actividad preventiva que mejora las habilidades del equipo para evitar que cometan errores.
+
+b) **QC** - La ejecución de pruebas es una actividad de detección que busca encontrar defectos en el producto ya construido.
+
+c) **QA** - Definir estándares es preventivo, establece reglas para que el código se escriba correctamente desde el principio.
+
+d) **QC** - La revisión de código es detección, se buscan defectos en código ya escrito.
+
+e) **QC** - Las pruebas exploratorias buscan encontrar defectos en el producto existente.
+
+f) **QA** - El pair programming es preventivo, dos personas trabajando juntas previenen errores en tiempo real.
 
 ---
 
@@ -1461,17 +1508,11 @@ Cuando integramos módulos, algunos pueden no estar disponibles todavía. Necesi
 │                                                                             │
 │  5. AD-HOC (Según disponibilidad)                                           │
 │     ├── Integrar cada componente cuando esté listo                          │
-│     ├── ✅ Sin tiempos muertos, acortamiento del proceso                    │
-│     ├── ❌ Puede necesitar stubs y drivers según el caso                    │
-│     └── Puede combinarse con otras estrategias                             │
+│     ├── ✅ Sin tiempos muertos, desarrollo ágil                             │
+│     └── ❌ Puede necesitar stubs y drivers según el caso                    │
 │                                                                             │
 └─────────────────────────────────────────────────────────────────────────────┘
 ```
-
-> 💡 **¿Qué estrategia seguir?** Lo mejor es adaptar la estrategia para optimizar riesgos o recursos:
-> 1. Se pueden aplicar **estrategias mixtas**: un equipo (el que desarrolla el GUI) aplica top-down y otros bottom-up
-> 2. Se combina alguna de las estrategias anteriores con las **fechas previstas de desarrollo**
-> 3. Se integran primero los módulos cuyas **interfaces sean más complejas o más críticas**
 
 #### Visualización: Top-Down vs Bottom-Up
 
@@ -1523,6 +1564,11 @@ Cuando integramos módulos, algunos pueden no estar disponibles todavía. Necesi
 | Software de terceros/Frameworks | Top-Down | Integración con código ajeno |
 | Desarrollo ágil, sprints cortos | Ad-Hoc | Sin tiempos muertos |
 | Proyecto con alto riesgo | Híbrida | Equilibra velocidad y calidad |
+
+> 💡 **Consejo estratégico:** Lo ideal es **adaptar la estrategia** para optimizar riesgos o recursos:
+> - **Estrategias mixtas:** Un equipo puede usar Top-Down (empezando por la GUI), mientras otros equipos usan Bottom-Up
+> - **Combinar con fechas de desarrollo:** Adaptar la estrategia según las fechas previstas de finalización de cada módulo
+> - **Priorizar interfaces críticas:** Integrar primero los módulos con interfaces más complejas o críticas
 
 #### Ejemplo de Integración: E-commerce
 
@@ -1752,7 +1798,7 @@ Cada vez que el software cambia, existe el riesgo de romper algo que funcionaba.
 
 ---
 
-## 3.4 Ejercicios del Módulo 3
+## 3.4 Ejercicios del Módulo 3 - CON SOLUCIONES
 
 ---
 
@@ -1765,21 +1811,91 @@ c) Verificar que un cliente puede completar todo el proceso de compra
 d) El director financiero verifica que los informes muestran los datos que necesita
 e) Los empleados del call center prueban el nuevo sistema de tickets
 
-*Espacio para tu respuesta:*
+**✅ SOLUCIÓN:**
+
+a) **PRUEBAS UNITARIAS** - Verificar una función individual (calcular_IVA) de forma aislada es exactamente el propósito de las pruebas unitarias.
+
+b) **PRUEBAS DE INTEGRACIÓN** - Se verifica la comunicación entre dos módulos (facturación e inventario) que ya funcionan individualmente.
+
+c) **PRUEBAS DE SISTEMA** - Un flujo completo end-to-end (búsqueda → carrito → pago → confirmación) es una prueba de sistema.
+
+d) **PRUEBAS DE ACEPTACIÓN (BAT - Business Acceptance)** - El director (stakeholder de negocio) está validando que el sistema cumple sus necesidades de negocio.
+
+e) **PRUEBAS DE ACEPTACIÓN (UAT - User Acceptance)** - Los usuarios finales (empleados de call center) validan que pueden hacer su trabajo con el sistema.
 
 ---
 
 **EJERCICIO 2:**
 Compara el modelo en cascada con el modelo ágil en términos de cuándo y cómo se realiza el testing. ¿Qué ventajas tiene cada enfoque?
 
-*Espacio para tu respuesta:*
+**✅ SOLUCIÓN:**
+
+| Aspecto | Cascada | Ágil |
+|---------|---------|------|
+| **Cuándo se planifica** | Al principio (plan global) | Continuo (cada sprint) |
+| **Cuándo se ejecuta** | Al final del desarrollo | Continuo durante el desarrollo |
+| **Quién hace testing** | Equipo QA separado | Tester integrado en el equipo |
+| **Documentación** | Extensa y formal | Mínima, enfocada |
+| **Automatización** | Opcional | Casi obligatoria |
+| **Feedback** | Muy tardío | Muy frecuente |
+
+**Ventajas del Cascada:**
+- Planificación clara y predecible
+- Documentación completa para proyectos complejos
+- Adecuado cuando requisitos son muy estables y conocidos
+- Fácil de gestionar y medir avance
+
+**Ventajas del Ágil:**
+- Feedback temprano y continuo
+- Adaptación rápida a cambios
+- Defectos encontrados y corregidos antes
+- Cliente ve el producto desde el principio
+- Menor coste de corrección de defectos
 
 ---
 
 **EJERCICIO 3:**
 Una empresa está desarrollando un software de gestión hospitalaria (crítico para la vida de los pacientes). ¿Qué modelo de desarrollo recomendarías y cómo debería ser el testing?
 
-*Espacio para tu respuesta:*
+**✅ SOLUCIÓN:**
+
+**Modelo recomendado:** **Modelo en V** o un **enfoque híbrido V + iterativo controlado**
+
+**Justificación:**
+- Es software **crítico para la vida** (safety-critical)
+- Requiere **trazabilidad estricta** entre requisitos y pruebas
+- Necesita **documentación exhaustiva** para auditorías y certificaciones
+- Debe cumplir **regulaciones** médicas (FDA, CE, ISO 13485)
+
+**Características del testing:**
+
+1. **Planificación exhaustiva:**
+   - Plan de pruebas formal desde el inicio
+   - Análisis de riesgos detallado
+   - Trazabilidad completa requisito → diseño → código → prueba
+
+2. **Todos los niveles de prueba:**
+   - Unitarias: Cobertura de código muy alta (>90%)
+   - Integración: Verificar todas las interfaces críticas
+   - Sistema: Pruebas funcionales, rendimiento, seguridad, recuperación
+   - Aceptación: Con médicos y personal sanitario real
+
+3. **Pruebas especiales:**
+   - Pruebas de seguridad del paciente (failure modes)
+   - Pruebas de recuperación ante fallos
+   - Pruebas de integridad de datos
+   - Pruebas de disponibilidad 24/7
+
+4. **Proceso:**
+   - Revisiones e inspecciones formales
+   - Verificación y validación independiente
+   - Gestión de configuración estricta
+   - Documentación para auditoría
+
+5. **Personal:**
+   - Testers certificados
+   - Equipo de QA independiente del desarrollo
+   - Participación de expertos médicos
 
 ---
 
@@ -1790,7 +1906,57 @@ a) Se añade un nuevo método de pago (Bizum) a una tienda online
 b) Se detecta y corrige un bug en el cálculo de impuestos
 c) El proveedor de la API de geolocalización cambia el formato de respuesta
 
-*Espacio para tu respuesta:*
+**✅ SOLUCIÓN:**
+
+**a) Nuevo método de pago (Bizum):**
+
+1. **Crear nuevos casos de prueba:**
+   - Pago exitoso con Bizum
+   - Pago fallido (saldo insuficiente)
+   - Timeout de la operación
+   - Cancelación por el usuario
+
+2. **Actualizar casos existentes:**
+   - Caso de "selección de método de pago" debe incluir Bizum
+   - Verificar que aparece en lista de métodos disponibles
+
+3. **Pruebas de integración:**
+   - Conexión con API de Bizum
+   - Confirmación de pago
+   - Manejo de errores
+
+4. **Actualizar regresión:**
+   - Verificar que métodos de pago existentes siguen funcionando
+   - Añadir nuevos casos a la suite de regresión
+
+**b) Bug corregido en cálculo de impuestos:**
+
+1. **Crear caso de prueba específico:**
+   - Caso que reproduce exactamente el bug corregido
+   - Añadirlo a la suite de regresión permanente
+
+2. **Revisar casos existentes:**
+   - ¿Por qué los casos existentes no detectaron el bug?
+   - Mejorar cobertura de casos de cálculo de impuestos
+
+3. **Añadir valores límite:**
+   - Si el bug era de límites, añadir más valores límite a probar
+
+**c) Cambio en API de geolocalización:**
+
+1. **Actualizar casos de integración:**
+   - Adaptar datos esperados al nuevo formato de respuesta
+   - Modificar parseo de respuestas en las pruebas
+
+2. **Verificar código de adaptación:**
+   - Si se creó una capa de adaptación, probarla exhaustivamente
+
+3. **Pruebas de compatibilidad:**
+   - Verificar funcionamiento en diferentes escenarios
+   - Manejo de errores con nuevo formato
+
+4. **Actualizar mocks/stubs:**
+   - Los mocks de la API deben devolver el nuevo formato
 
 ---
 
@@ -2165,7 +2331,7 @@ Cuando se detecta un defecto y se corrige, son necesarios **dos tipos de pruebas
 
 ---
 
-## 4.6 Ejercicios del Módulo 4
+## 4.6 Ejercicios del Módulo 4 - CON SOLUCIONES
 
 ---
 
@@ -2179,7 +2345,19 @@ d) Hacer login y verificar el dashboard
 e) Inspección de código entre desarrolladores
 f) Prueba de carga con 1000 usuarios
 
-*Espacio para tu respuesta:*
+**✅ SOLUCIÓN:**
+
+a) **D - Dinámica** - Se está ejecutando el software (el navegador interactúa con la aplicación)
+
+b) **E - Estática** - Solo se lee y revisa un documento, no se ejecuta ningún código
+
+c) **E - Estática** - El linter analiza el código sin ejecutarlo, busca patrones y errores
+
+d) **D - Dinámica** - Se ejecuta el software (login, carga del dashboard)
+
+e) **E - Estática** - Se revisa el código leyéndolo, sin ejecutarlo
+
+f) **D - Dinámica** - Se ejecuta el sistema con carga de 1000 usuarios simulados
 
 ---
 
@@ -2191,7 +2369,15 @@ b) Asegurar que todas las ramas del código se ejecutan
 c) Probar que el sistema calcula correctamente el IVA según requisitos
 d) Verificar que no hay código inalcanzable
 
-*Espacio para tu respuesta:*
+**✅ SOLUCIÓN:**
+
+a) **Caja Negra** - Solo nos importa el comportamiento: entrada inválida → mensaje de error. No necesitamos ver cómo se valida internamente.
+
+b) **Caja Blanca** - La cobertura de ramas requiere conocer el código para diseñar casos que pasen por todas las ramas.
+
+c) **Caja Negra** - Verificamos contra requisitos: entrada (importe, tipo IVA) → salida esperada. No nos importa la implementación.
+
+d) **Caja Blanca** - Detectar código inalcanzable (dead code) requiere análisis del código fuente.
 
 ---
 
@@ -2204,7 +2390,17 @@ c) "El sistema debe enviar email de bienvenida al registrarse"
 d) "El sistema debe estar disponible 24/7"
 e) "Los datos de tarjeta deben transmitirse cifrados"
 
-*Espacio para tu respuesta:*
+**✅ SOLUCIÓN:**
+
+a) **F - Funcional** - Describe QUÉ hace el sistema (la funcionalidad de búsqueda)
+
+b) **NF - No Funcional** - Describe CÓMO debe hacerlo (el rendimiento, tiempo de respuesta)
+
+c) **F - Funcional** - Describe QUÉ hace el sistema (enviar un email específico)
+
+d) **NF - No Funcional** - Describe atributo de calidad (disponibilidad/fiabilidad)
+
+e) **NF - No Funcional** - Describe atributo de calidad (seguridad)
 
 ---
 
@@ -2213,7 +2409,23 @@ Se ha desplegado una nueva versión de una aplicación de banca online. Describe
 a) Qué incluirías en el Smoke Test (5 verificaciones)
 b) Qué áreas cubrirían las pruebas de regresión prioritarias (5 áreas)
 
-*Espacio para tu respuesta:*
+**✅ SOLUCIÓN:**
+
+**a) Smoke Test (verificaciones rápidas para confirmar que lo básico funciona):**
+
+1. **Acceso:** La aplicación carga y muestra la página de login
+2. **Autenticación:** Se puede hacer login con credenciales válidas
+3. **Consulta:** Se puede ver el saldo de las cuentas
+4. **Operación básica:** Se puede iniciar una transferencia (no hace falta completarla)
+5. **Navegación:** Los menús principales funcionan y cargan las secciones
+
+**b) Pruebas de regresión prioritarias (áreas críticas a verificar):**
+
+1. **Autenticación y seguridad:** Login, logout, 2FA, bloqueo por intentos
+2. **Operaciones financieras:** Transferencias, pagos, operaciones con tarjeta
+3. **Consultas de cuentas:** Saldos, movimientos, extractos
+4. **Gestión de beneficiarios:** Añadir, modificar, eliminar destinatarios
+5. **Alertas y notificaciones:** Emails, SMS, alertas de seguridad
 
 ---
 
@@ -2607,21 +2819,73 @@ Las técnicas de caja negra y blanca son sistemáticas y formales. Sin embargo, 
 
 ---
 
-## 5.5 Ejercicios del Módulo 5
+## 5.5 Ejercicios del Módulo 5 - CON SOLUCIONES
 
 ---
 
 **EJERCICIO 1:**
 Un campo de texto acepta códigos de producto con formato "XXX-9999" (3 letras, guión, 4 dígitos). Usando particiones de equivalencia, identifica las particiones y diseña los casos de prueba mínimos.
 
-*Espacio para tu respuesta:*
+**✅ SOLUCIÓN:**
+
+**Particiones identificadas:**
+
+| Partición | Descripción | Ejemplo | Resultado esperado |
+|-----------|-------------|---------|-------------------|
+| P1: Válida | 3 letras + guión + 4 dígitos | ABC-1234 | Aceptado |
+| P2: Inválida - pocas letras | < 3 letras | AB-1234 | Rechazado |
+| P3: Inválida - muchas letras | > 3 letras | ABCD-1234 | Rechazado |
+| P4: Inválida - pocas cifras | < 4 dígitos | ABC-123 | Rechazado |
+| P5: Inválida - muchas cifras | > 4 dígitos | ABC-12345 | Rechazado |
+| P6: Inválida - sin guión | Sin guión | ABC1234 | Rechazado |
+| P7: Inválida - números en letras | Números donde van letras | 123-4567 | Rechazado |
+| P8: Inválida - letras en números | Letras donde van números | ABC-DEFG | Rechazado |
+| P9: Inválida - vacío | Campo vacío | (vacío) | Rechazado |
+
+**Casos de prueba mínimos (uno por partición):**
+1. "ABC-1234" → Válido
+2. "AB-1234" → Inválido (pocas letras)
+3. "ABCD-1234" → Inválido (muchas letras)
+4. "ABC-123" → Inválido (pocos dígitos)
+5. "ABC-12345" → Inválido (muchos dígitos)
+6. "ABC1234" → Inválido (sin guión)
+7. "123-4567" → Inválido (números donde letras)
+8. "ABC-DEFG" → Inválido (letras donde números)
+9. "" → Inválido (vacío)
 
 ---
 
 **EJERCICIO 2:**
 Un sistema acepta cantidades de compra entre 1 y 100 unidades. Usando análisis de valores límite, lista todos los valores que deberías probar.
 
-*Espacio para tu respuesta:*
+**✅ SOLUCIÓN:**
+
+**Valores límite a probar:**
+
+```
+Límite inferior (1):
+- 0  → Inválido (justo fuera)
+- 1  → Válido (en el límite)
+- 2  → Válido (justo dentro)
+
+Límite superior (100):
+- 99  → Válido (justo dentro)
+- 100 → Válido (en el límite)
+- 101 → Inválido (justo fuera)
+```
+
+**Lista completa de valores a probar:**
+
+| Valor | Resultado esperado | Razón |
+|-------|-------------------|-------|
+| 0 | Rechazar | Límite inferior - 1 |
+| 1 | Aceptar | Límite inferior |
+| 2 | Aceptar | Límite inferior + 1 |
+| 99 | Aceptar | Límite superior - 1 |
+| 100 | Aceptar | Límite superior |
+| 101 | Rechazar | Límite superior + 1 |
+
+**Nota:** Opcionalmente también se podría probar un valor muy interno (ej: 50) para representar la partición válida, y valores negativos (-1) para cubrir errores de tipo.
 
 ---
 
@@ -2633,7 +2897,33 @@ Un sistema de préstamos tiene las siguientes reglas:
 
 Crea la tabla de decisión correspondiente.
 
-*Espacio para tu respuesta:*
+**✅ SOLUCIÓN:**
+
+```
+┌──────────────────────────────┬────────┬────────┬────────┬────────┐
+│ CONDICIONES                  │   R1   │   R2   │   R3   │   R4   │
+├──────────────────────────────┼────────┼────────┼────────┼────────┤
+│ ¿Antigüedad > 2 años?        │   Sí   │   Sí   │   No   │   No   │
+│ ¿Tiene deudas?               │   No   │   Sí   │   No   │   Sí   │
+├──────────────────────────────┼────────┼────────┼────────┼────────┤
+│ ACCIONES                     │        │        │        │        │
+├──────────────────────────────┼────────┼────────┼────────┼────────┤
+│ Aprobar préstamo             │   X    │        │        │        │
+│ Revisar préstamo             │        │   X    │        │        │
+│ Rechazar préstamo            │        │        │   X    │   X    │
+└──────────────────────────────┴────────┴────────┴────────┴────────┘
+```
+
+**Casos de prueba derivados:**
+
+| Caso | Antigüedad | Deudas | Resultado esperado |
+|------|------------|--------|-------------------|
+| R1 | 3 años | No | Aprobar |
+| R2 | 5 años | Sí | Revisar |
+| R3 | 1 año | No | Rechazar |
+| R4 | 2 años | Sí | Rechazar |
+
+**Nota:** Observar que R3 y R4 tienen la misma acción (Rechazar) porque cuando la antigüedad es ≤ 2 años, no importa si tiene deudas o no. Se podrían colapsar en una sola regla con "-" (no importa) en la condición de deudas, pero para la tabla completa se muestran las 4 combinaciones.
 
 ---
 
@@ -2658,14 +2948,112 @@ def calcular_envio(peso, urgente, socio):
     return precio
 ```
 
-*Espacio para tu respuesta:*
+**✅ SOLUCIÓN:**
+
+**Análisis de decisiones:**
+- Decisión 1: `peso <= 1` (True/False)
+- Decisión 2: `peso <= 5` (True/False, solo si D1 es False)
+- Decisión 3: `urgente` (True/False)
+- Decisión 4: `socio` (True/False)
+
+**Casos de prueba para 100% cobertura de decisiones:**
+
+| Caso | peso | urgente | socio | D1 | D2 | D3 | D4 | Precio |
+|------|------|---------|-------|----|----|----|----|--------|
+| 1 | 0.5 | False | False | T | - | F | F | 5 |
+| 2 | 3 | True | False | F | T | T | F | 20 |
+| 3 | 10 | False | True | F | F | F | T | 18 |
+| 4 | 2 | True | True | F | T | T | T | 18 |
+
+**Explicación de la cobertura:**
+- **D1 True:** Caso 1 (peso=0.5)
+- **D1 False, D2 True:** Casos 2 y 4 (peso=3 y peso=2)
+- **D1 False, D2 False:** Caso 3 (peso=10)
+- **D3 True:** Casos 2 y 4
+- **D3 False:** Casos 1 y 3
+- **D4 True:** Casos 3 y 4
+- **D4 False:** Casos 1 y 2
+
+Con estos 4 casos se cubren todas las ramas del código.
+
+**Nota:** Se podrían reducir a 3 casos optimizando las combinaciones, pero 4 casos proporcionan buena cobertura y son fáciles de entender.
 
 ---
 
 **EJERCICIO 5:**
 Diseña una carta de sesión exploratoria para probar la funcionalidad de "recuperar contraseña" de una aplicación web.
 
-*Espacio para tu respuesta:*
+**✅ SOLUCIÓN:**
+
+```
+┌─────────────────────────────────────────────────────────────────────────────┐
+│                    CARTA DE SESIÓN EXPLORATORIA                             │
+├─────────────────────────────────────────────────────────────────────────────┤
+│                                                                             │
+│ MISIÓN: Explorar el flujo de recuperación de contraseña buscando           │
+│         problemas de usabilidad, seguridad y casos límite.                  │
+│                                                                             │
+│ ÁREA BAJO PRUEBA: Funcionalidad "¿Olvidaste tu contraseña?"                │
+│                                                                             │
+│ DURACIÓN: 60 minutos                                                        │
+│                                                                             │
+│ TESTER: [Nombre del tester]                                                 │
+│ FECHA: [Fecha de la sesión]                                                 │
+│ ENTORNO: [Navegador, versión, dispositivo]                                  │
+│                                                                             │
+├─────────────────────────────────────────────────────────────────────────────┤
+│ ÁREAS A EXPLORAR:                                                           │
+│                                                                             │
+│ □ Solicitud de recuperación                                                 │
+│   - Email válido existente                                                  │
+│   - Email válido no existente (¿revela que no existe?)                     │
+│   - Email con formato inválido                                              │
+│   - Campo vacío                                                             │
+│   - Múltiples solicitudes seguidas (rate limiting)                         │
+│                                                                             │
+│ □ Email de recuperación                                                     │
+│   - ¿Llega el email? ¿En cuánto tiempo?                                    │
+│   - ¿El enlace es único y seguro?                                          │
+│   - ¿Expira el enlace? ¿Cuándo?                                            │
+│   - ¿Se puede usar el enlace varias veces?                                 │
+│                                                                             │
+│ □ Formulario de nueva contraseña                                            │
+│   - Validación de requisitos de contraseña                                  │
+│   - Confirmación de contraseña (coinciden/no coinciden)                    │
+│   - ¿Permite poner la contraseña anterior?                                 │
+│   - Mostrar/ocultar contraseña                                             │
+│                                                                             │
+│ □ Seguridad                                                                 │
+│   - ¿El enlace es predecible?                                              │
+│   - ¿Funciona desde otra IP/dispositivo?                                   │
+│   - ¿Se invalidan otras sesiones activas?                                  │
+│                                                                             │
+├─────────────────────────────────────────────────────────────────────────────┤
+│ HEURÍSTICAS A USAR:                                                         │
+│ • SFDPOT (Structure, Function, Data, Platform, Operations, Time)           │
+│ • Valores límite y casos extremos                                           │
+│ • Flujos interrumpidos (abandonar a mitad)                                 │
+│ • Usuarios maliciosos (¿qué haría un atacante?)                            │
+│                                                                             │
+├─────────────────────────────────────────────────────────────────────────────┤
+│ NOTAS DURANTE LA SESIÓN:                                                    │
+│                                                                             │
+│ [Timestamp] - [Observación/Hallazgo]                                        │
+│ ___________ - ________________________________________                      │
+│ ___________ - ________________________________________                      │
+│ ___________ - ________________________________________                      │
+│                                                                             │
+├─────────────────────────────────────────────────────────────────────────────┤
+│ RESUMEN POST-SESIÓN:                                                        │
+│                                                                             │
+│ Defectos encontrados: ___                                                   │
+│ Preguntas para el equipo: ___                                               │
+│ Áreas no exploradas: ___                                                    │
+│ Riesgos identificados: ___                                                  │
+│ Recomendaciones: ___                                                        │
+│                                                                             │
+└─────────────────────────────────────────────────────────────────────────────┘
+```
 
 ---
 
@@ -2725,5 +3113,5 @@ Diseña una carta de sesión exploratoria para probar la funcionalidad de "recup
 
 ---
 
-*[Fin del Documento - Versión para Alumnos v2]*
+*[Fin del Documento - Versión para Profesor con Soluciones v2]*
 *Material de apoyo para el curso de Testing de Software - EOI 2026*
