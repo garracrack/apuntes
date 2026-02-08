@@ -44,7 +44,7 @@ Los errores de software no son simplemente molestias técnicas. Pueden tener con
 ### 1.1.3 Casos Reales de Fallos de Software Catastróficos
 
 **El Therac-25 (1985-1987):**
-Una máquina de radioterapia cuyo software tenía defectos que causaron sobredosis masivas de radiación a varios pacientes, resultando en muertes y lesiones graves. El problema: una condición de carrera (race condition) en el código que no fue detectada en las pruebas.
+Una máquina de radioterapia cuyo software tenía defectos que causaron sobredosis masivas de radiación a varios pacientes, resultando en muertes y lesiones graves. El problema: una condición de carrera (race condition: cuando dos procesos acceden al mismo recurso a la vez y el resultado depende del orden impredecible en que se ejecutan) en el código que no fue detectada en las pruebas.
 
 **El Ariane 5 (1996):**
 El cohete europeo Ariane 5 explotó 37 segundos después del lanzamiento. Coste: 370 millones de dólares. La causa: un error de conversión de un número de 64 bits a 16 bits que causó un desbordamiento (overflow). El código había funcionado correctamente en Ariane 4, pero nadie lo probó adecuadamente para las nuevas condiciones de Ariane 5.
