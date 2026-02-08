@@ -668,18 +668,11 @@ En testing se distingue entre verificación y validación porque ayudan a evitar
 
 ## 1.4 Ejercicios del Módulo 1
 
+> 📝 **Nota:** Los ejercicios de Error/Defecto/Fallo se encuentran en la sección 1.2.6
+
 ---
 
 **EJERCICIO 1:**
-En un sistema de reservas de hotel, el requisito dice: "El número de noches debe estar entre 1 y 30". Un usuario introduce 0 noches y el sistema lo acepta sin mostrar error.
-
-Identifica: a) ¿Cuál fue el error? b) ¿Cuál es el defecto? c) ¿Cuál es el fallo?
-
-*Espacio para tu respuesta:*
-
----
-
-**EJERCICIO 2:**
 Para cada situación, indica qué principio del testing se está violando:
 
 a) "Ejecutamos 1000 casos de prueba sin encontrar fallos, por lo tanto el sistema no tiene defectos"
@@ -692,16 +685,7 @@ e) "Aplicamos la misma estrategia de testing para nuestra app móvil que para el
 
 ---
 
-**EJERCICIO 3:**
-Un sistema bancario permite transferencias. El requisito dice: "Las transferencias deben ser de mínimo 1€ y máximo 10.000€". Un usuario intenta transferir 10.001€ y el sistema lo permite.
-
-Identifica: a) ¿Cuál fue el error? b) ¿Cuál es el defecto? c) ¿Cuál es el fallo?
-
-*Espacio para tu respuesta:*
-
----
-
-**EJERCICIO 4:**
+**EJERCICIO 2:**
 Explica con tus propias palabras la diferencia entre Verificación y Validación. Pon un ejemplo de un sistema que pase la verificación pero falle la validación.
 
 *Espacio para tu respuesta:*
