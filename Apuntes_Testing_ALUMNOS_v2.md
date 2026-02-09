@@ -1,6 +1,6 @@
-# APUNTES COMPLETOS DE TESTING DE SOFTWARE
+# FUNDAMENTOS DE TESTING DE SOFTWARE
 ## Curso de Técnico en Testing y Ciberseguridad Aplicada
-### Versión para Alumnos (v2 - Reorganizada)
+### Versión v2
 
 ---
 
