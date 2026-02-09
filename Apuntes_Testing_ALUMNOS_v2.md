@@ -2118,21 +2118,8 @@ Cuando se detecta un defecto y se corrige, son necesarios **dos tipos de pruebas
 > - ¿El proceso de pago completo funciona?
 > - ¿Los clientes NO-VIP no reciben el descuento por error?
 
-### 4.5.2 Smoke Test (prueba de humo) vs Sanity Test (prueba de cordura)
 
-| Tipo | Objetivo | Amplitud | Cuándo |
-|------|----------|----------|--------|
-| **Smoke Test** (prueba de humo - ver si "echa humo" al encenderlo) | ¿Funciona lo básico? | Amplio pero superficial | Cada nueva build (compilación) |
-| **Sanity Test** (prueba de cordura - ver si tiene sentido) | ¿Funciona esta área? | Estrecho pero profundo | Tras cambios específicos |
-
-**Ejemplo de Smoke Test para e-commerce:**
-1. ¿La aplicación arranca?
-2. ¿Se puede hacer login?
-3. ¿Se pueden buscar productos?
-4. ¿Se puede añadir al carrito?
-5. ¿Se puede iniciar el pago?
-
-### 4.5.3 Pruebas Manuales vs Automatizadas
+### 4.5.2 Pruebas Manuales vs Automatizadas
 
 ```
 ┌─────────────────────────────────────────────────────────────────────────────┐
