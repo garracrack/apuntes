@@ -885,10 +885,6 @@ Las medidas de aseguramiento de la calidad se pueden clasificar según su **enfo
 - **Técnicas:** Uso de métodos, plantillas, herramientas y patrones de diseño probados.
 - **Organizativas:** Establecimiento de directrices, estándares de codificación, checklists (listas de verificación) y procesos.
 
-**Medidas PROACTIVAS (Constructivas):** Buscan **evitar** que los errores se introduzcan.
-- **Técnicas:** Uso de métodos, plantillas, herramientas y patrones de diseño probados.
-- **Organizativas:** Establecimiento de directrices, estándares de codificación, checklists (listas de verificación) y procesos.
-
 **Medidas REACTIVAS (Analíticas):** Buscan **detectar** los errores ya introducidos.
 - **Estáticas:** Revisiones, análisis de código, análisis de flujo (sin ejecutar el software).
 - **Dinámicas:** Pruebas de caja blanca, caja negra y basadas en experiencia (ejecutando el software).
