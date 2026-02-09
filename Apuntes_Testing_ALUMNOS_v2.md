@@ -2191,14 +2191,6 @@ e) "Los datos de tarjeta deben transmitirse cifrados"
 
 ---
 
-**EJERCICIO 4:**
-Se ha desplegado una nueva versión de una aplicación de banca online. Describe:
-a) Qué incluirías en el Smoke Test (5 verificaciones)
-b) Qué áreas cubrirían las pruebas de regresión prioritarias (5 áreas)
-
-*Espacio para tu respuesta:*
-
----
 
 # MÓDULO 5: TÉCNICAS DE DISEÑO DE PRUEBAS
 
