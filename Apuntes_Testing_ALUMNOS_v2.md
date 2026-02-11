@@ -678,14 +678,14 @@ c) "Las pruebas las haremos cuando el desarrollo esté completamente terminado"
 d) "Usamos exactamente los mismos casos de prueba desde hace 3 años"
 e) "Aplicamos la misma estrategia de testing para nuestra app móvil que para el software del marcapasos"
 
-*Espacio para tu respuesta:*
+
 
 ---
 
 **EJERCICIO 2:**
 Explica con tus propias palabras la diferencia entre Verificación y Validación. Pon un ejemplo de un sistema que pase la verificación pero falle la validación.
 
-*Espacio para tu respuesta:*
+
 
 ---
 
@@ -1020,7 +1020,7 @@ Un sistema tiene los siguientes requisitos no funcionales:
 
 ¿A qué característica de calidad del modelo ISO/IEC 25010 corresponde cada uno?
 
-*Espacio para tu respuesta:*
+
 
 ---
 
@@ -1034,7 +1034,7 @@ d) Revisar el código de un compañero
 e) Realizar pruebas exploratorias
 f) Implementar pair programming
 
-*Espacio para tu respuesta:*
+
 
 ---
 
@@ -1754,14 +1754,14 @@ c) Verificar que un cliente puede completar todo el proceso de compra
 d) El director financiero verifica que los informes muestran los datos que necesita
 e) Los empleados del call center prueban el nuevo sistema de tickets
 
-*Espacio para tu respuesta:*
+
 
 ---
 
 **EJERCICIO 2:**
 Compara el modelo en cascada con el modelo ágil en términos de cuándo y cómo se realiza el testing. ¿Qué ventajas tiene cada enfoque?
 
-*Espacio para tu respuesta:*
+
 
 ---
 
@@ -1773,7 +1773,7 @@ a) El equipo entrega una nueva versión funcional cada dos semanas y adapta los 
 b) Todo el código que se sube al repositorio pasa automáticamente por pruebas y, si todo es correcto, se despliega en producción sin intervención manual.
 c) El proyecto avanza por fases bien definidas: primero análisis, luego diseño, después desarrollo y finalmente pruebas.
 
-*Espacio para tu respuesta:*
+
 
 ---
 
@@ -1784,7 +1784,7 @@ a) Probar que una función de login valida correctamente usuario y contraseña.
 b) Verificar que el sistema completo permite realizar una compra online.
 c) Comprobar que dos módulos intercambian datos correctamente.
 
-*Espacio para tu respuesta:*
+
 
 ---
 
@@ -1796,7 +1796,7 @@ b) Se corrige un error en el cálculo de descuentos en el carrito de compras.
 c) Se eliminan funcionalidades obsoletas del sistema.
 d) Se añade un nuevo método de autenticación (por ejemplo, login con Google).
 
-*Espacio para tu respuesta:*
+
 
 ---
 
@@ -2167,7 +2167,7 @@ d) Hacer login y verificar el dashboard
 e) Inspección de código entre desarrolladores
 f) Prueba de carga con 1000 usuarios
 
-*Espacio para tu respuesta:*
+
 
 ---
 
@@ -2179,7 +2179,7 @@ b) Asegurar que todas las ramas del código se ejecutan
 c) Probar que el sistema calcula correctamente el IVA según requisitos
 d) Verificar que no hay código inalcanzable
 
-*Espacio para tu respuesta:*
+
 
 ---
 
@@ -2192,7 +2192,7 @@ c) "El sistema debe enviar email de bienvenida al registrarse"
 d) "El sistema debe estar disponible 24/7"
 e) "Los datos de tarjeta deben transmitirse cifrados"
 
-*Espacio para tu respuesta:*
+
 
 ---
 
@@ -2594,14 +2594,14 @@ Las técnicas de caja negra y blanca son sistemáticas y formales. Sin embargo, 
 **EJERCICIO 1:**
 Un campo de texto acepta códigos de producto con formato "XXX-9999" (3 letras, guión, 4 dígitos). Usando particiones de equivalencia, identifica las particiones y diseña los casos de prueba mínimos.
 
-*Espacio para tu respuesta:*
+
 
 ---
 
 **EJERCICIO 2:**
 Un sistema acepta cantidades de compra entre 1 y 100 unidades. Usando análisis de valores límite, lista todos los valores que deberías probar.
 
-*Espacio para tu respuesta:*
+
 
 ---
 
@@ -2613,7 +2613,7 @@ Un sistema de préstamos tiene las siguientes reglas:
 
 Crea la tabla de decisión correspondiente.
 
-*Espacio para tu respuesta:*
+
 
 ---
 
@@ -2638,14 +2638,14 @@ def calcular_envio(peso, urgente, socio):
     return precio
 ```
 
-*Espacio para tu respuesta:*
+
 
 ---
 
 **EJERCICIO 5:**
 Diseña una carta de sesión exploratoria para probar la funcionalidad de "recuperar contraseña" de una aplicación web.
 
-*Espacio para tu respuesta:*
+
 
 ---
 
