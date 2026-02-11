@@ -454,7 +454,6 @@ a) ¿Cuál fue el error?
 b) ¿Cuál es el defecto?
 c) ¿Cuál es el fallo?
 
-*Espacio para tu respuesta:*
 
 ---
 
@@ -481,7 +480,6 @@ a) ¿Es correcto este resultado?
 b) ¿Qué pasa con un paquete de exactamente 5 kg?
 c) ¿Hay algún defecto en el código?
 
-*Espacio para tu respuesta:*
 
 ---
 
@@ -493,7 +491,6 @@ a) ¿Cuál fue el error?
 b) ¿Cuál es el defecto?
 c) ¿Cuál es el fallo?
 
-*Espacio para tu respuesta:*
 
 ---
 
@@ -1566,7 +1563,7 @@ Desde el **punto de vista del usuario**: se prueba el entorno, las funciones, la
 - Se omiten los controladores de pruebas y los stubs (todo es real)
 - Todas las interfaces externas del sistema se probarán bajo condiciones de producción
 
-> ⚠️ **Importante:** No suele ser buena idea lanzar pruebas en el entorno de producción:
+> ⚠️ **Importante:** No suele ser buena idea lanzar pruebas en el entorno de producción (mejor en un clon):
 > - Los errores surgidos pueden dañar el sistema productivo
 > - El entorno del sistema está en movimiento (los datos, el estado de las aplicaciones…). Eso dificulta que las pruebas sean reproducibles.
 
@@ -1588,10 +1585,6 @@ Como vimos en el Módulo 2 (sección 2.2.2), los requisitos no funcionales defin
 - En la definición de requisitos no siempre está claro "cómo de bien" debe funcionar algo
 - A menudo definiciones vagas: "manejar sin problemas", "pantallas claras"
 - Los requisitos no funcionales se dan a menudo de manera **implícita** y por este motivo no se definen
-
-**La prueba de un requisito no funcional se da como superada si se consigue un determinado valor en una métrica establecida:**
-- **MTBF** (Mean Time Between Failures - Tiempo medio entre fallos)
-- **MTTR** (Mean Time To Repair - Tiempo medio de reparación)
 
 **Las pruebas no funcionales incluyen** (pero no están limitadas a):
 - Pruebas de **prestaciones** (rendimiento)
@@ -1772,19 +1765,36 @@ Compara el modelo en cascada con el modelo ágil en términos de cuándo y cómo
 
 ---
 
+
 **EJERCICIO 3:**
-Una empresa está desarrollando un software de gestión hospitalaria (crítico para la vida de los pacientes). ¿Qué modelo de desarrollo recomendarías y cómo debería ser el testing?
+Lee cada caso y señala a qué tipo de desarrollo corresponde (cascada, ágil, DevOps, etc.):
+
+a) El equipo entrega una nueva versión funcional cada dos semanas y adapta los requisitos según el feedback del cliente.
+b) Todo el código que se sube al repositorio pasa automáticamente por pruebas y, si todo es correcto, se despliega en producción sin intervención manual.
+c) El proyecto avanza por fases bien definidas: primero análisis, luego diseño, después desarrollo y finalmente pruebas.
 
 *Espacio para tu respuesta:*
 
 ---
 
 **EJERCICIO 4:**
-Describe qué actividades de mantenimiento de pruebas serían necesarias en los siguientes escenarios:
+Relaciona cada situación con el nivel de testing más adecuado (unitario, integración, sistema, aceptación) y justifica tu elección:
 
-a) Se añade un nuevo método de pago (Bizum) a una tienda online
-b) Se detecta y corrige un bug en el cálculo de impuestos
-c) El proveedor de la API de geolocalización cambia el formato de respuesta
+a) Probar que una función de login valida correctamente usuario y contraseña.
+b) Verificar que el sistema completo permite realizar una compra online.
+c) Comprobar que dos módulos intercambian datos correctamente.
+
+*Espacio para tu respuesta:*
+
+---
+
+**EJERCICIO 5:**
+Indica si en cada situación corresponde realizar pruebas de mantenimiento o de regresión. Justifica brevemente tu respuesta:
+
+a) Se actualiza la versión de la base de datos utilizada por la aplicación.
+b) Se corrige un error en el cálculo de descuentos en el carrito de compras.
+c) Se eliminan funcionalidades obsoletas del sistema.
+d) Se añade un nuevo método de autenticación (por ejemplo, login con Google).
 
 *Espacio para tu respuesta:*
 
@@ -1806,8 +1816,7 @@ Las pruebas se pueden clasificar según varios criterios ortogonales (una misma 
 │  Por EJECUCIÓN                    Por CONOCIMIENTO del código               │
 │  ──────────────                   ───────────────────────────               │
 │  • Estáticas (sin ejecutar)       • Caja Negra (sin ver código)             │
-│  • Dinámicas (ejecutando)         • Caja Blanca (viendo código)             │
-│                                   • Caja Gris (conocimiento parcial)        │
+│  • Dinámicas (ejecutando)         • Caja Blanca (viendo código)             │                                          │
 │                                                                             │
 │  Por OBJETIVO                     Por AUTOMATIZACIÓN                        │
 │  ────────────                     ──────────────────                        │
@@ -1943,12 +1952,6 @@ def calcular_categoria(edad):
 # edad = 30  → rama "Adulto"
 # edad = 70  → rama "Senior"
 ```
-
-### 4.3.3 Caja Gris (Grey Box)
-
-**Definición:** Combinación de ambas, con conocimiento parcial de la estructura interna.
-
-**Ejemplo:** Conocer la estructura de la base de datos para diseñar mejores pruebas funcionales.
 
 ## 4.4 Pruebas Funcionales vs No Funcionales
 
@@ -2145,6 +2148,8 @@ Cuando se detecta un defecto y se corrige, son necesarios **dos tipos de pruebas
 │                                                                             │
 └─────────────────────────────────────────────────────────────────────────────┘
 ```
+La pirámide recomienda automatizar todo lo posible en los niveles bajos y reservar las pruebas manuales para los aspectos más complejos o subjetivos. Así se logra eficiencia y cobertura óptima en el proceso de testing
+
 
 ---
 
@@ -2167,7 +2172,7 @@ f) Prueba de carga con 1000 usuarios
 ---
 
 **EJERCICIO 2:**
-Indica qué técnica usarías (caja negra, caja blanca, o caja gris) para cada situación:
+Indica qué técnica usarías (caja negra, caja blanca, o ambas (caja gris)) para cada situación:
 
 a) Verificar que se muestra error cuando el email no tiene formato válido
 b) Asegurar que todas las ramas del código se ejecutan
