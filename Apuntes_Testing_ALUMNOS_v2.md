@@ -1,10 +1,47 @@
 # FUNDAMENTOS DE TESTING DE SOFTWARE
+## Índice General
+
+- [MÓDULO 1: Introducción y Fundamentos del Testing](#modulo-1-introduccion-y-fundamentos-del-testing)
+    - [1.1 Introducción](#11-introduccion-por-que-necesitamos-el-testing)
+    - [1.2 Error, Defecto y Fallo](#12-los-tres-conceptos-clave-error-defecto-y-fallo)
+    - [1.3 Principios ISTQB](#13-los-7-principios-fundamentales-del-testing-istqb---international-software-testing-qualifications-board)
+    - [1.4 Ejercicios](#14-ejercicios-del-modulo-1)
+- [MÓDULO 2: Calidad del Software](#modulo-2-calidad-del-software)
+    - [2.1 ¿Qué es la Calidad?](#21-que-es-la-calidad-del-software)
+    - [2.2 QA vs QC](#22-qa-quality-assurance-vs-qc-quality-control)
+    - [2.3 Coste de la Calidad](#23-el-coste-de-la-calidad)
+    - [2.4 Ejercicios](#24-ejercicios-del-modulo-2)
+- [MÓDULO 3: Testing en el Ciclo de Vida](#modulo-3-el-testing-en-el-ciclo-de-vida-del-software)
+    - [3.1 Modelos de Desarrollo](#31-modelos-de-desarrollo-de-software)
+    - [3.2 Niveles de Prueba](#32-niveles-de-prueba)
+    - [3.3 Mantenimiento de las Pruebas](#33-mantenimiento-de-las-pruebas)
+    - [3.4 Ejercicios](#34-ejercicios-del-modulo-3)
+- [MÓDULO 4: Tipos y Clasificación de Pruebas](#modulo-4-tipos-y-clasificacion-de-pruebas)
+    - [4.1 Clasificación General](#41-clasificacion-general)
+    - [4.2 Pruebas Estáticas vs Dinámicas](#42-pruebas-estaticas-vs-dinamicas)
+    - [4.3 Caja Negra vs Caja Blanca](#43-pruebas-de-caja-negra-vs-caja-blanca)
+    - [4.4 Funcionales vs No Funcionales](#44-pruebas-funcionales-vs-no-funcionales)
+    - [4.5 Otros Tipos Importantes](#45-otros-tipos-de-pruebas-importantes)
+    - [4.6 Ejercicios](#46-ejercicios-del-modulo-4)
+- [MÓDULO 5: Técnicas de Diseño de Pruebas](#modulo-5-tecnicas-de-diseno-de-pruebas)
+    - [5.1 Proceso de Desarrollo](#51-el-proceso-de-desarrollo-de-pruebas)
+    - [5.2 Técnicas de Caja Negra](#52-tecnicas-de-caja-negra)
+    - [5.3 Técnicas de Caja Blanca](#53-tecnicas-de-caja-blanca)
+    - [5.4 Técnicas Basadas en Experiencia](#54-tecnicas-basadas-en-experiencia)
+    - [5.5 Ejercicios](#55-ejercicios-del-modulo-5)
+- [Cierre: Resumen Final del Curso](#cierre-resumen-final-del-curso)
+
 ## Curso de Técnico en Testing y Ciberseguridad Aplicada
 ### Versión v2
 
 ---
 
 # MÓDULO 1: INTRODUCCIÓN Y FUNDAMENTOS DEL TESTING
+### Índice Módulo 1
+- [1.1 Introducción](#11-introduccion-por-que-necesitamos-el-testing)
+- [1.2 Error, Defecto y Fallo](#12-los-tres-conceptos-clave-error-defecto-y-fallo)
+- [1.3 Principios ISTQB](#13-los-7-principios-fundamentales-del-testing-istqb---international-software-testing-qualifications-board)
+- [1.4 Ejercicios](#14-ejercicios-del-modulo-1)
 
 ## 1.1 Introducción: ¿Por qué necesitamos el Testing?
 
@@ -690,6 +727,11 @@ Explica con tus propias palabras la diferencia entre Verificación y Validación
 ---
 
 # MÓDULO 2: CALIDAD DEL SOFTWARE
+### Índice Módulo 2
+- [2.1 ¿Qué es la Calidad?](#21-que-es-la-calidad-del-software)
+- [2.2 QA vs QC](#22-qa-quality-assurance-vs-qc-quality-control)
+- [2.3 Coste de la Calidad](#23-el-coste-de-la-calidad)
+- [2.4 Ejercicios](#24-ejercicios-del-modulo-2)
 
 Ahora que entendemos qué son los errores, defectos y fallos, y conocemos los principios que guían el testing, surge una pregunta fundamental: **¿qué estamos tratando de conseguir con todo esto?** La respuesta es: **calidad**. 
 
@@ -1039,6 +1081,11 @@ f) Implementar pair programming
 ---
 
 # MÓDULO 3: EL TESTING EN EL CICLO DE VIDA DEL SOFTWARE
+### Índice Módulo 3
+- [3.1 Modelos de Desarrollo](#31-modelos-de-desarrollo-de-software)
+- [3.2 Niveles de Prueba](#32-niveles-de-prueba)
+- [3.3 Mantenimiento de las Pruebas](#33-mantenimiento-de-las-pruebas)
+- [3.4 Ejercicios](#34-ejercicios-del-modulo-3)
 
 Ya sabemos qué es la calidad y por qué es importante invertir en ella. Pero, **¿cuándo y cómo debemos realizar el testing?** La respuesta depende del modelo de desarrollo que utilicemos. En este módulo veremos cómo el testing se integra de forma diferente según la metodología elegida.
 
@@ -1801,6 +1848,13 @@ d) Se añade un nuevo método de autenticación (por ejemplo, login con Google).
 ---
 
 # MÓDULO 4: TIPOS Y CLASIFICACIÓN DE PRUEBAS
+### Índice Módulo 4
+- [4.1 Clasificación General](#41-clasificacion-general)
+- [4.2 Pruebas Estáticas vs Dinámicas](#42-pruebas-estaticas-vs-dinamicas)
+- [4.3 Caja Negra vs Caja Blanca](#43-pruebas-de-caja-negra-vs-caja-blanca)
+- [4.4 Funcionales vs No Funcionales](#44-pruebas-funcionales-vs-no-funcionales)
+- [4.5 Otros Tipos Importantes](#45-otros-tipos-de-pruebas-importantes)
+- [4.6 Ejercicios](#46-ejercicios-del-modulo-4)
 
 Ya conocemos cuándo probar (modelos de desarrollo) y a qué nivel probar (unitarias, integración, sistema, aceptación). Ahora necesitamos responder: **¿qué tipos de pruebas existen y cuándo usar cada una?** Este módulo nos proporciona un mapa completo de las diferentes clasificaciones.
 
@@ -2198,6 +2252,12 @@ e) "Los datos de tarjeta deben transmitirse cifrados"
 
 
 # MÓDULO 5: TÉCNICAS DE DISEÑO DE PRUEBAS
+### Índice Módulo 5
+- [5.1 Proceso de Desarrollo](#51-el-proceso-de-desarrollo-de-pruebas)
+- [5.2 Técnicas de Caja Negra](#52-tecnicas-de-caja-negra)
+- [5.3 Técnicas de Caja Blanca](#53-tecnicas-de-caja-blanca)
+- [5.4 Técnicas Basadas en Experiencia](#54-tecnicas-basadas-en-experiencia)
+- [5.5 Ejercicios](#55-ejercicios-del-modulo-5)
 
 Ya conocemos los tipos de pruebas que existen. Ahora llega la pregunta más práctica: **¿cómo diseñamos los casos de prueba concretos?** No podemos probar todo (Principio 2), así que necesitamos técnicas sistemáticas que nos ayuden a seleccionar los casos más efectivos. Este módulo es el más práctico: aquí aprenderemos a crear pruebas reales.
 
