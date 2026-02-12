@@ -31,7 +31,7 @@
     - [5.5 Ejercicios](#55-ejercicios-del-módulo-5)
 - [Cierre: Resumen Final del Curso](#cierre-resumen-final-del-curso)
 
-## Curso de Técnico en Testing y Ciberseguridad Aplicada
+## Curso de Testing Seguro: Calidad de Software
 ### Versión v2
 
 ---
