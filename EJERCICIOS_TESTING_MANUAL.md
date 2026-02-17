@@ -1,6 +1,6 @@
 # Ejercicios de Testing Manual — Enunciados y Código Fuente
 
-Este documento contiene únicamente los enunciados y el código fuente de los 6 ejercicios de testing (caja negra y caja blanca). El objetivo es que los alumnos completen para cada ejercicio:
+Resuelve estos 6 ejercicios de testing (caja negra y caja blanca). El objetivo es que completes para cada ejercicio:
 - La técnica de testing utilizada
 - Los casos de prueba derivados
 - Los tests manuales o automáticos
@@ -208,6 +208,8 @@ def aprobar_prestamo(credit_score: int, income: int, debt_ratio: float) -> str:
 ## Ejercicio 6 — Caminos y complejidad ciclomática
 
 ### Enunciado
+Indica la complejidad ciclomática de este código, y luego saca los casos de prueba que consideres para cubrir la cobertura de caminos.
+
 Una tienda evalúa devoluciones según estas variables:
 
 Entradas:
@@ -248,4 +250,3 @@ def evaluar_devolucion(dias_desde_compra: int, tiene_ticket: bool, abierto: bool
 
 ---
 
-> Completa para cada ejercicio: técnica, casos de prueba y tests.
