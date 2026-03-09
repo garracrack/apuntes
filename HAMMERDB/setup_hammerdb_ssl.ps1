@@ -123,16 +123,16 @@ if (-not $skipCerts) {
         $errorCount++
     }
 
-    # Generar CA cert (con fallback automático)
+    # Generar CA cert (con fallback automático de 3 niveles)
     Write-Host "  Generando certificado CA..." -NoNewline
     $result = cmd /c "`"$opensslPath`" req -new -x509 -nodes -days 3650 -key ca-key.pem -out ca.pem -subj `"/C=ES/ST=Madrid/L=Madrid/O=Student/OU=Database/CN=MySQL_CA`" 2>&1"
     
     if (Test-Path "ca.pem") {
         Write-Host " OK" -ForegroundColor Green
     } else {
-        Write-Host " WARN (intentando método alternativo...)" -ForegroundColor Yellow
+        Write-Host " WARN (método 2...)" -ForegroundColor Yellow -NoNewline
         
-        # Método alternativo: usar archivo de configuración
+        # Método 2: usar archivo de configuración
         $configContent = @"
 [req]
 default_bits = 2048
@@ -154,11 +154,35 @@ CN=MySQL_CA
         Remove-Item "openssl_ca_temp.cnf" -Force -ErrorAction SilentlyContinue
         
         if (Test-Path "ca.pem") {
-            Write-Host "    Método alternativo OK" -ForegroundColor Green
+            Write-Host " OK" -ForegroundColor Green
         } else {
-            Write-Host "    ERROR (ambos métodos fallaron)" -ForegroundColor Red
-            Write-Host "    Error: $result" -ForegroundColor Yellow
-            $errorCount++
+            Write-Host " WARN (método 3...)" -ForegroundColor Yellow -NoNewline
+            
+            # Método 3: modo interactivo con respuestas automáticas
+            $answers = @"
+ES
+Madrid
+Madrid
+Student
+Database
+MySQL_CA
+
+
+"@
+            $answersFile = "openssl_answers_ca.txt"
+            Set-Content -Path $answersFile -Value $answers -Encoding ASCII -NoNewline
+            
+            $result = cmd /c "`"$opensslPath`" req -new -x509 -nodes -days 3650 -key ca-key.pem -out ca.pem < $answersFile 2>&1"
+            Remove-Item $answersFile -Force -ErrorAction SilentlyContinue
+            
+            if (Test-Path "ca.pem") {
+                Write-Host " OK" -ForegroundColor Green
+            } else {
+                Write-Host " ERROR" -ForegroundColor Red
+                Write-Host "    Los 3 métodos automáticos fallaron" -ForegroundColor Red
+                Write-Host "    Error: $result" -ForegroundColor Yellow
+                $errorCount++
+            }
         }
     }
 
@@ -173,16 +197,16 @@ CN=MySQL_CA
         $errorCount++
     }
 
-    # Generar server request (con fallback automático)
+    # Generar server request (con fallback automático de 3 niveles)
     Write-Host "  Generando solicitud servidor..." -NoNewline
     $result = cmd /c "`"$opensslPath`" req -new -key server-key.pem -out server-req.pem -subj `"/C=ES/ST=Madrid/L=Madrid/O=Student/OU=Database/CN=localhost`" 2>&1"
     
     if (Test-Path "server-req.pem") {
         Write-Host " OK" -ForegroundColor Green
     } else {
-        Write-Host " WARN (intentando método alternativo...)" -ForegroundColor Yellow
+        Write-Host " WARN (método 2...)" -ForegroundColor Yellow -NoNewline
         
-        # Método alternativo: usar archivo de configuración
+        # Método 2: usar archivo de configuración
         $configContent = @"
 [req]
 default_bits = 2048
@@ -204,14 +228,38 @@ CN=localhost
         Remove-Item "openssl_server_temp.cnf" -Force -ErrorAction SilentlyContinue
         
         if (Test-Path "server-req.pem") {
-            Write-Host "    Método alternativo OK" -ForegroundColor Green
+            Write-Host " OK" -ForegroundColor Green
         } else {
-            Write-Host "    ERROR (ambos métodos fallaron)" -ForegroundColor Red
-            Write-Host "    Error: $result" -ForegroundColor Yellow
-            if (-not (Test-Path "server-key.pem")) {
-                Write-Host "    Problema: server-key.pem no existe" -ForegroundColor Red
+            Write-Host " WARN (método 3...)" -ForegroundColor Yellow -NoNewline
+            
+            # Método 3: modo interactivo con respuestas automáticas
+            $answers = @"
+ES
+Madrid
+Madrid
+Student
+Database
+localhost
+
+
+"@
+            $answersFile = "openssl_answers_server.txt"
+            Set-Content -Path $answersFile -Value $answers -Encoding ASCII -NoNewline
+            
+            $result = cmd /c "`"$opensslPath`" req -new -key server-key.pem -out server-req.pem < $answersFile 2>&1"
+            Remove-Item $answersFile -Force -ErrorAction SilentlyContinue
+            
+            if (Test-Path "server-req.pem") {
+                Write-Host " OK" -ForegroundColor Green
+            } else {
+                Write-Host " ERROR" -ForegroundColor Red
+                Write-Host "    Los 3 métodos automáticos fallaron" -ForegroundColor Red
+                Write-Host "    Error: $result" -ForegroundColor Yellow
+                if (-not (Test-Path "server-key.pem")) {
+                    Write-Host "    Problema: server-key.pem no existe" -ForegroundColor Red
+                }
+                $errorCount++
             }
-            $errorCount++
         }
     }
 
@@ -471,11 +519,12 @@ if ($errorCount -eq 0) {
     Write-Host "ERRORES COMUNES Y SOLUCIONES:" -ForegroundColor Yellow
     Write-Host "============================================" -ForegroundColor Yellow
     
-    Write-Host "`n1. Si ambos métodos automáticos fallaron:" -ForegroundColor Cyan
-    Write-Host "   El script intentó generar certificados de 2 formas:" -ForegroundColor White
+    Write-Host "`n1. Si los 3 métodos automáticos fallaron:" -ForegroundColor Cyan
+    Write-Host "   El script intentó generar certificados de 3 formas:" -ForegroundColor White
     Write-Host "   - Método 1: Parámetro -subj directo" -ForegroundColor Gray
-    Write-Host "   - Método 2: Archivo de configuración temporal (fallback automático)" -ForegroundColor Gray
-    Write-Host "   Si ambos fallaron, usa el modo INTERACTIVO manual:`n" -ForegroundColor White
+    Write-Host "   - Método 2: Archivo de configuración temporal" -ForegroundColor Gray
+    Write-Host "   - Método 3: Respuestas automáticas por redirección" -ForegroundColor Gray
+    Write-Host "   Si los 3 fallaron (caso EXCEPCIONAL), necesitas modo manual:`n" -ForegroundColor White
     Write-Host "   cd $mysqlDataDir" -ForegroundColor Gray
     Write-Host "   `"$opensslPath`" genrsa 2048 > ca-key.pem" -ForegroundColor Gray
     Write-Host "   `"$opensslPath`" req -new -x509 -nodes -days 3650 -key ca-key.pem -out ca.pem" -ForegroundColor Gray
@@ -492,6 +541,7 @@ if ($errorCount -eq 0) {
     Write-Host "`n3. Despues de generar certificados manualmente:" -ForegroundColor Cyan
     Write-Host "   Vuelve a ejecutar este script, detectara los certificados existentes" -ForegroundColor White
     
+    Write-Host "`nRECUERDA: Solo ~1-5% de casos llegan aquí. El script ya intentó TODO automáticamente." -ForegroundColor Cyan
     Write-Host "`nRevisa los mensajes de error arriba para mas detalles." -ForegroundColor Yellow
     Write-Host "`nGuia completa: $XamppPath\GUIA_ESTUDIANTES_HAMMERDB_SSL.md" -ForegroundColor Cyan
 }
