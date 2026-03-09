@@ -281,9 +281,47 @@ if (Test-Path $mysqlExe) {
 }
 
 # ============================================
-# PASO 5: Instrucciones HammerDB
+# PASO 5: Crear usuario MySQL para HammerDB
 # ============================================
-Write-Host "`n[PASO 5] CONFIGURAR HAMMERDB" -ForegroundColor Yellow
+Write-Host "`n[PASO 5] CREAR USUARIO MYSQL" -ForegroundColor Yellow
+Write-Host "============================================`n"
+
+if (Test-Path $mysqlExe) {
+    Write-Step "Creando usuario 'tpcc' con contraseña..." "INFO"
+    
+    # Verificar si el usuario ya existe
+    $userCheck = & $mysqlExe -u root -h 127.0.0.1 -e "SELECT User FROM mysql.user WHERE User='tpcc';" 2>&1
+    
+    if ($userCheck -match "tpcc") {
+        Write-Step "Usuario 'tpcc' ya existe" "OK"
+    } else {
+        # Crear usuario y otorgar permisos
+        $createUser = & $mysqlExe -u root -h 127.0.0.1 -e "CREATE USER 'tpcc'@'localhost' IDENTIFIED BY 'tpcc'; GRANT ALL PRIVILEGES ON *.* TO 'tpcc'@'localhost'; CREATE USER 'tpcc'@'%' IDENTIFIED BY 'tpcc'; GRANT ALL PRIVILEGES ON *.* TO 'tpcc'@'%'; FLUSH PRIVILEGES;" 2>&1
+        
+        if ($LASTEXITCODE -eq 0) {
+            Write-Step "Usuario 'tpcc' creado exitosamente" "OK"
+            Write-Host "  Usuario: " -NoNewline -ForegroundColor White
+            Write-Host "tpcc" -ForegroundColor Green
+            Write-Host "  Password: " -NoNewline -ForegroundColor White
+            Write-Host "tpcc" -ForegroundColor Green
+            Write-Host "  Permisos: " -NoNewline -ForegroundColor White
+            Write-Host "ALL PRIVILEGES" -ForegroundColor Green
+        } else {
+            Write-Step "Error al crear usuario: $createUser" "ERROR"
+            Write-Host "  Puedes crear el usuario manualmente:" -ForegroundColor Yellow
+            Write-Host "  mysql -u root -e `"CREATE USER 'tpcc'@'localhost' IDENTIFIED BY 'tpcc'; GRANT ALL PRIVILEGES ON *.* TO 'tpcc'@'localhost'; FLUSH PRIVILEGES;`""
+            $errorCount++
+        }
+    }
+} else {
+    Write-Step "No se pudo crear usuario (mysql.exe no encontrado)" "WARN"
+    Write-Host "  Crea el usuario manualmente antes de usar HammerDB" -ForegroundColor Yellow
+}
+
+# ============================================
+# PASO 6: Instrucciones HammerDB
+# ============================================
+Write-Host "`n[PASO 6] CONFIGURAR HAMMERDB" -ForegroundColor Yellow
 Write-Host "============================================`n"
 
 Write-Host "1. Abre HammerDB GUI" -ForegroundColor Cyan
@@ -301,9 +339,9 @@ Write-Host "localhost" -ForegroundColor Green
 Write-Host "   MariaDB Port: " -NoNewline -ForegroundColor White
 Write-Host "3306" -ForegroundColor Green
 Write-Host "   MariaDB User: " -NoNewline -ForegroundColor White
-Write-Host "root" -ForegroundColor Green
+Write-Host "tpcc" -ForegroundColor Green
 Write-Host "   MariaDB Password: " -NoNewline -ForegroundColor White
-Write-Host "(vacio)" -ForegroundColor Green
+Write-Host "tpcc" -ForegroundColor Green
 Write-Host "   Database: " -NoNewline -ForegroundColor White
 Write-Host "test" -ForegroundColor Green
 

@@ -7,9 +7,10 @@
 4. [Paso 2: Configurar MySQL para SSL](#paso-2)
 5. [Paso 3: Reiniciar MySQL](#paso-3)
 6. [Paso 4: Verificar SSL](#paso-4)
-7. [Paso 5: Configurar HammerDB GUI](#paso-5)
-8. [Verificación Final](#verificacion)
-9. [Troubleshooting](#troubleshooting)
+7. [Paso 5: Crear Usuario MySQL](#paso-5)
+8. [Paso 6: Configurar HammerDB GUI](#paso-6)
+9. [Verificación Final](#verificacion)
+10. [Troubleshooting](#troubleshooting)
 
 ---
 
@@ -228,9 +229,52 @@ ssl_key         | server-key.pem
 
 ---
 
-## 🖥️ PASO 5: CONFIGURAR HAMMERDB GUI {#paso-5}
+## � PASO 5: CREAR USUARIO MYSQL {#paso-5}
 
-### 5.1 Abrir HammerDB
+### 5.1 ¿Por qué crear un usuario?
+
+**IMPORTANTE:** Por seguridad y para evitar problemas de conexión, es **recomendado crear un usuario dedicado** con contraseña en lugar de usar root sin contraseña.
+
+### 5.2 Crear usuario desde PowerShell
+
+```powershell
+d:\xampp\mysql\bin\mysql.exe -u root -h 127.0.0.1 -e "CREATE USER 'tpcc'@'localhost' IDENTIFIED BY 'tpcc'; GRANT ALL PRIVILEGES ON *.* TO 'tpcc'@'localhost'; CREATE USER 'tpcc'@'%' IDENTIFIED BY 'tpcc'; GRANT ALL PRIVILEGES ON *.* TO 'tpcc'@'%'; FLUSH PRIVILEGES;"
+```
+
+**Explicación:**
+- Crea usuario: `tpcc`
+- Contraseña: `tpcc`
+- Permisos: Todos (`ALL PRIVILEGES`)
+- Conexiones desde: localhost y cualquier host (`%`)
+
+### 5.3 Verificar usuario creado
+
+```powershell
+d:\xampp\mysql\bin\mysql.exe -u tpcc -ptpcc -e "SELECT USER(), CURRENT_USER();"
+```
+
+**Resultado esperado:**
+```
++----------------+----------------+
+| USER()         | CURRENT_USER() |
++----------------+----------------+
+| tpcc@localhost | tpcc@localhost |
++----------------+----------------+
+```
+
+✅ Si ves esto, el usuario fue creado correctamente.
+
+### 5.4 (Opcional) Crear base de datos dedicada
+
+```powershell
+d:\xampp\mysql\bin\mysql.exe -u root -h 127.0.0.1 -e "CREATE DATABASE IF NOT EXISTS tpcc;"
+```
+
+---
+
+## 🖥️ PASO 6: CONFIGURAR HAMMERDB GUI {#paso-6}
+
+### 6.1 Abrir HammerDB
 
 ```powershell
 "C:\Program Files\HammerDB-5.0\hammerdb.exe"
@@ -238,23 +282,23 @@ ssl_key         | server-key.pem
 
 O busca HammerDB en el menú de Windows.
 
-### 5.2 Seleccionar Benchmark
+### 6.2 Seleccionar Benchmark
 
 1. En la barra superior, click en **"Benchmark"**
 2. Seleccionar **"TPC-C"**
 
-### 5.3 Seleccionar Base de Datos
+### 6.3 Seleccionar Base de Datos
 
 1. Click en **"Database"**
 2. Seleccionar **"MariaDB"**
 
-### 5.4 Configurar Conexión
+### 6.4 Configurar Conexión
 
 1. Click en **"Options"**
 2. Expandir **"MariaDB"** en el árbol de la izquierda
 3. Click en **"Connection"**
 
-### 5.5 Llenar los campos de conexión
+### 6.5 Llenar los campos de conexión
 
 ```
 MariaDB Host: localhost
@@ -262,7 +306,7 @@ MariaDB Port: 3306
 MariaDB Socket: null
 ```
 
-### 5.6 Configurar SSL
+### 6.6 Configurar SSL
 
 **OPCIÓN A - CON SSL (Recomendado primero):**
 ```
@@ -289,22 +333,28 @@ SSL Cipher: (DEJAR VACÍO)
 (Todos los campos SSL deshabilitados)
 ```
 
-### 5.7 Configurar Usuario y Base de Datos
+### 6.7 Configurar Usuario y Base de Datos
 
+**CONFIGURACIÓN RECOMENDADA (usuario creado en Paso 5):**
+```
+MariaDB User: tpcc
+MariaDB User Password: tpcc
+TPROC-C MariaDB Database: test
+```
+
+⚠️ **ALTERNATIVA (si prefieres usar root):**
 ```
 MariaDB User: root
 MariaDB User Password: (dejar vacío si no configuraste password)
 TPROC-C MariaDB Database: test
 ```
 
-⚠️ **NOTA:** Si creaste la base de datos `tpcc` como en clase, usa:
+👉 **NOTA:** Si creaste una base de datos `tpcc` dedicada:
 ```
 TPROC-C MariaDB Database: tpcc
-MariaDB User: tpcc
-MariaDB User Password: tpcc
 ```
 
-### 5.8 Aplicar Configuración
+### 6.8 Aplicar Configuración
 
 1. Click en **"OK"** en la parte inferior de la ventana
 2. Esperar mensaje de confirmación

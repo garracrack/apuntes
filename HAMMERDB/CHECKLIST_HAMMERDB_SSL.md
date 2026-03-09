@@ -100,7 +100,20 @@ Start-Sleep -Seconds 5
 
 ---
 
-### PASO 4: Verificar SSL
+### PASO 4: Crear Usuario MySQL
+
+```powershell
+d:\xampp\mysql\bin\mysql.exe -u root -e "CREATE USER 'tpcc'@'localhost' IDENTIFIED BY 'tpcc'; GRANT ALL PRIVILEGES ON *.* TO 'tpcc'@'localhost'; CREATE USER 'tpcc'@'%' IDENTIFIED BY 'tpcc'; GRANT ALL PRIVILEGES ON *.* TO 'tpcc'@'%'; FLUSH PRIVILEGES;"
+```
+
+**Verificar usuario creado:**
+```powershell
+d:\xampp\mysql\bin\mysql.exe -u tpcc -ptpcc -e "SELECT USER();"
+```
+
+---
+
+### PASO 5: Verificar SSL
 
 ```powershell
 d:\xampp\mysql\bin\mysql.exe -u root -e "SHOW VARIABLES LIKE 'have_ssl';"
@@ -117,7 +130,7 @@ have_ssl | YES
 
 ---
 
-### PASO 5: Configurar HammerDB
+### PASO 6: Configurar HammerDB
 
 #### Abrir HammerDB GUI
 ```
@@ -134,8 +147,8 @@ C:\Program Files\HammerDB-5.0\hammerdb.exe
 ```
 MariaDB Host:        localhost
 MariaDB Port:        3306
-MariaDB User:        root
-MariaDB Password:    (vacío)
+MariaDB User:        tpcc
+MariaDB Password:    tpcc
 Database:            test
 ```
 
