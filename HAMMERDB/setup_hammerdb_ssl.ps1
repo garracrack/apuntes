@@ -123,18 +123,43 @@ if (-not $skipCerts) {
         $errorCount++
     }
 
-    # Generar CA cert
+    # Generar CA cert (con fallback automático)
     Write-Host "  Generando certificado CA..." -NoNewline
     $result = cmd /c "`"$opensslPath`" req -new -x509 -nodes -days 3650 -key ca-key.pem -out ca.pem -subj `"/C=ES/ST=Madrid/L=Madrid/O=Student/OU=Database/CN=MySQL_CA`" 2>&1"
+    
     if (Test-Path "ca.pem") {
         Write-Host " OK" -ForegroundColor Green
     } else {
-        Write-Host " ERROR" -ForegroundColor Red
-        Write-Host "    Error: $result" -ForegroundColor Yellow
-        if (-not (Test-Path "ca-key.pem")) {
-            Write-Host "    Problema: ca-key.pem no existe" -ForegroundColor Red
+        Write-Host " WARN (intentando método alternativo...)" -ForegroundColor Yellow
+        
+        # Método alternativo: usar archivo de configuración
+        $configContent = @"
+[req]
+default_bits = 2048
+prompt = no
+default_md = sha256
+distinguished_name = dn
+
+[dn]
+C=ES
+ST=Madrid
+L=Madrid
+O=Student
+OU=Database
+CN=MySQL_CA
+"@
+        Set-Content -Path "openssl_ca_temp.cnf" -Value $configContent -Encoding ASCII
+        
+        $result = cmd /c "`"$opensslPath`" req -new -x509 -nodes -days 3650 -key ca-key.pem -out ca.pem -config openssl_ca_temp.cnf 2>&1"
+        Remove-Item "openssl_ca_temp.cnf" -Force -ErrorAction SilentlyContinue
+        
+        if (Test-Path "ca.pem") {
+            Write-Host "    Método alternativo OK" -ForegroundColor Green
+        } else {
+            Write-Host "    ERROR (ambos métodos fallaron)" -ForegroundColor Red
+            Write-Host "    Error: $result" -ForegroundColor Yellow
+            $errorCount++
         }
-        $errorCount++
     }
 
     # Generar server key
@@ -148,18 +173,46 @@ if (-not $skipCerts) {
         $errorCount++
     }
 
-    # Generar server request
+    # Generar server request (con fallback automático)
     Write-Host "  Generando solicitud servidor..." -NoNewline
     $result = cmd /c "`"$opensslPath`" req -new -key server-key.pem -out server-req.pem -subj `"/C=ES/ST=Madrid/L=Madrid/O=Student/OU=Database/CN=localhost`" 2>&1"
+    
     if (Test-Path "server-req.pem") {
         Write-Host " OK" -ForegroundColor Green
     } else {
-        Write-Host " ERROR" -ForegroundColor Red
-        Write-Host "    Error: $result" -ForegroundColor Yellow
-        if (-not (Test-Path "server-key.pem")) {
-            Write-Host "    Problema: server-key.pem no existe" -ForegroundColor Red
+        Write-Host " WARN (intentando método alternativo...)" -ForegroundColor Yellow
+        
+        # Método alternativo: usar archivo de configuración
+        $configContent = @"
+[req]
+default_bits = 2048
+prompt = no
+default_md = sha256
+distinguished_name = dn
+
+[dn]
+C=ES
+ST=Madrid
+L=Madrid
+O=Student
+OU=Database
+CN=localhost
+"@
+        Set-Content -Path "openssl_server_temp.cnf" -Value $configContent -Encoding ASCII
+        
+        $result = cmd /c "`"$opensslPath`" req -new -key server-key.pem -out server-req.pem -config openssl_server_temp.cnf 2>&1"
+        Remove-Item "openssl_server_temp.cnf" -Force -ErrorAction SilentlyContinue
+        
+        if (Test-Path "server-req.pem") {
+            Write-Host "    Método alternativo OK" -ForegroundColor Green
+        } else {
+            Write-Host "    ERROR (ambos métodos fallaron)" -ForegroundColor Red
+            Write-Host "    Error: $result" -ForegroundColor Yellow
+            if (-not (Test-Path "server-key.pem")) {
+                Write-Host "    Problema: server-key.pem no existe" -ForegroundColor Red
+            }
+            $errorCount++
         }
-        $errorCount++
     }
 
     # Firmar certificado servidor
@@ -418,16 +471,18 @@ if ($errorCount -eq 0) {
     Write-Host "ERRORES COMUNES Y SOLUCIONES:" -ForegroundColor Yellow
     Write-Host "============================================" -ForegroundColor Yellow
     
-    Write-Host "`n1. Error en 'Generando certificado CA' o 'Generando solicitud servidor':" -ForegroundColor Cyan
-    Write-Host "   Problema: OpenSSL no puede procesar el parametro -subj" -ForegroundColor White
-    Write-Host "   Solucion: Ejecuta manualmente estos comandos:`n" -ForegroundColor White
+    Write-Host "`n1. Si ambos métodos automáticos fallaron:" -ForegroundColor Cyan
+    Write-Host "   El script intentó generar certificados de 2 formas:" -ForegroundColor White
+    Write-Host "   - Método 1: Parámetro -subj directo" -ForegroundColor Gray
+    Write-Host "   - Método 2: Archivo de configuración temporal (fallback automático)" -ForegroundColor Gray
+    Write-Host "   Si ambos fallaron, usa el modo INTERACTIVO manual:`n" -ForegroundColor White
     Write-Host "   cd $mysqlDataDir" -ForegroundColor Gray
     Write-Host "   `"$opensslPath`" genrsa 2048 > ca-key.pem" -ForegroundColor Gray
     Write-Host "   `"$opensslPath`" req -new -x509 -nodes -days 3650 -key ca-key.pem -out ca.pem" -ForegroundColor Gray
-    Write-Host "   (Te pedira datos: pais=ES, estado=Madrid, etc. o pulsa Enter)" -ForegroundColor Yellow
+    Write-Host "   (Te pedirá datos: Common Name=MySQL_CA, resto pulsa Enter)" -ForegroundColor Yellow
     Write-Host "   `"$opensslPath`" genrsa 2048 > server-key.pem" -ForegroundColor Gray
     Write-Host "   `"$opensslPath`" req -new -key server-key.pem -out server-req.pem" -ForegroundColor Gray
-    Write-Host "   (Te pedira datos de nuevo, Common Name=localhost)" -ForegroundColor Yellow
+    Write-Host "   (Common Name=localhost - IMPORTANTE!)" -ForegroundColor Yellow
     Write-Host "   `"$opensslPath`" x509 -req -in server-req.pem -days 3650 -CA ca.pem -CAkey ca-key.pem -set_serial 01 -out server-cert.pem" -ForegroundColor Gray
     
     Write-Host "`n2. Si OpenSSL no esta en la ruta esperada:" -ForegroundColor Cyan
