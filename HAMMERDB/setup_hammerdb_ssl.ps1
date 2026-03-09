@@ -348,28 +348,66 @@ Write-Host "============================================`n"
 $mysqlStopBat = "$XamppPath\mysql_stop.bat"
 $mysqlStartBat = "$XamppPath\mysql_start.bat"
 
+# Verificar si MySQL está corriendo
+$mysqlRunning = Get-Process -Name "mysqld" -ErrorAction SilentlyContinue
+
 # Detener MySQL
-if (Test-Path $mysqlStopBat) {
-    Write-Step "Deteniendo MySQL..." "INFO"
-    Start-Process -FilePath $mysqlStopBat -Wait -NoNewWindow
-    Start-Sleep -Seconds 3
-    Write-Step "MySQL detenido" "OK"
+if ($mysqlRunning) {
+    Write-Step "MySQL está corriendo, deteniendo..." "INFO"
+    
+    if (Test-Path $mysqlStopBat) {
+        try {
+            # Intentar con .bat (ocultar errores molestos)
+            $process = Start-Process -FilePath $mysqlStopBat -WindowStyle Hidden -PassThru -ErrorAction SilentlyContinue
+            Start-Sleep -Seconds 3
+            
+            # Verificar si realmente se detuvo
+            $stillRunning = Get-Process -Name "mysqld" -ErrorAction SilentlyContinue
+            if (-not $stillRunning) {
+                Write-Step "MySQL detenido correctamente" "OK"
+            } else {
+                # Si .bat falló, usar método alternativo
+                Write-Host "  (método .bat incompleto, usando alternativa...)" -ForegroundColor Yellow -NoNewline
+                Stop-Process -Name "mysqld" -Force -ErrorAction SilentlyContinue
+                Start-Sleep -Seconds 2
+                Write-Host " OK" -ForegroundColor Green
+            }
+        } catch {
+            # Si hay error, usar método directo
+            Write-Host "  (usando método alternativo...)" -ForegroundColor Yellow -NoNewline
+            Stop-Process -Name "mysqld" -Force -ErrorAction SilentlyContinue
+            Start-Sleep -Seconds 2
+            Write-Host " OK" -ForegroundColor Green
+        }
+    } else {
+        Write-Step "Deteniendo MySQL directamente..." "INFO"
+        Stop-Process -Name "mysqld" -Force -ErrorAction SilentlyContinue
+        Start-Sleep -Seconds 2
+        Write-Step "MySQL detenido" "OK"
+    }
 } else {
-    Write-Step "Script mysql_stop.bat no encontrado" "WARN"
-    Write-Host "  Detén MySQL manualmente desde XAMPP Control Panel" -ForegroundColor Yellow
-    Read-Host "  Presiona Enter cuando hayas detenido MySQL"
+    Write-Step "MySQL ya está detenido" "OK"
 }
 
 # Iniciar MySQL
+Write-Step "Iniciando MySQL..." "INFO"
 if (Test-Path $mysqlStartBat) {
-    Write-Step "Iniciando MySQL..." "INFO"
-    Start-Process -FilePath $mysqlStartBat -WindowStyle Hidden
+    Start-Process -FilePath $mysqlStartBat -WindowStyle Hidden -ErrorAction SilentlyContinue
     Start-Sleep -Seconds 5
-    Write-Step "MySQL iniciado" "OK"
+    
+    # Verificar que inició correctamente
+    $mysqlStarted = Get-Process -Name "mysqld" -ErrorAction SilentlyContinue
+    if ($mysqlStarted) {
+        Write-Step "MySQL iniciado correctamente" "OK"
+    } else {
+        Write-Step "MySQL parece no haber iniciado" "WARN"
+        Write-Host "  Inicia MySQL manualmente desde XAMPP Control Panel" -ForegroundColor Yellow
+        Read-Host "  Presiona Enter cuando MySQL esté corriendo"
+    }
 } else {
     Write-Step "Script mysql_start.bat no encontrado" "WARN"
     Write-Host "  Inicia MySQL manualmente desde XAMPP Control Panel" -ForegroundColor Yellow
-    Read-Host "  Presiona Enter cuando MySQL este corriendo"
+    Read-Host "  Presiona Enter cuando MySQL esté corriendo"
 }
 
 # ============================================
