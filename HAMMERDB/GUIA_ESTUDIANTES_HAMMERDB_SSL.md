@@ -557,6 +557,106 @@ netstat -an | findstr :3306
 
 ---
 
+### Problema 8: Script falla en "Generando certificado CA", "Generando solicitud servidor" y "Firmando certificado servidor"
+
+**Síntoma:** 
+- ✅ Generando clave CA... OK
+- ✅ Generando clave servidor... OK
+- ❌ Generando certificado CA... ERROR
+- ❌ Generando solicitud servidor... ERROR
+- ❌ Firmando certificado servidor... ERROR
+
+**Causa:** OpenSSL tiene problemas con el parámetro `-subj` en algunos sistemas Windows, o requiere entrada interactiva.
+
+**Solución A - Generar certificados manualmente (MODO INTERACTIVO):**
+
+```powershell
+# 1. Abrir PowerShell como Administrador
+cd d:\xampp\mysql\data
+
+# 2. Generar CA key
+d:\xampp\apache\bin\openssl.exe genrsa 2048 > ca-key.pem
+
+# 3. Generar CA cert (TE PEDIRÁ DATOS - puedes pulsar Enter en todo)
+d:\xampp\apache\bin\openssl.exe req -new -x509 -nodes -days 3650 -key ca-key.pem -out ca.pem
+
+# Te preguntará (puedes dejar en blanco con Enter):
+# Country Name (2 letter code): ES
+# State or Province Name: Madrid
+# Locality Name: Madrid
+# Organization Name: Student
+# Organizational Unit Name: Database
+# Common Name: MySQL_CA
+# Email Address: [Enter]
+
+# 4. Generar server key
+d:\xampp\apache\bin\openssl.exe genrsa 2048 > server-key.pem
+
+# 5. Generar server request (TE PEDIRÁ DATOS)
+d:\xampp\apache\bin\openssl.exe req -new -key server-key.pem -out server-req.pem
+
+# IMPORTANTE: En "Common Name" escribe: localhost
+# El resto puedes dejarlo en blanco
+
+# 6. Firmar certificado
+d:\xampp\apache\bin\openssl.exe x509 -req -in server-req.pem -days 3650 -CA ca.pem -CAkey ca-key.pem -set_serial 01 -out server-cert.pem
+
+# 7. Limpiar temporal
+Remove-Item server-req.pem -Force
+
+# 8. Verificar que todos están creados
+Get-ChildItem *.pem | Select-Object Name, Length
+```
+
+**Solución B - Con archivo de configuración:**
+
+Si el modo interactivo da problemas, crea un archivo de configuración temporal:
+
+```powershell
+cd d:\xampp\mysql\data
+
+# Crear archivo de configuración
+@"
+[req]
+default_bits = 2048
+prompt = no
+default_md = sha256
+distinguished_name = dn
+
+[dn]
+C=ES
+ST=Madrid
+L=Madrid
+O=Student
+OU=Database
+CN=
+"@ | Out-File -FilePath openssl_ca.cnf -Encoding ASCII
+
+# Modificar CN para CA
+(Get-Content openssl_ca.cnf) -replace 'CN=$', 'CN=MySQL_CA' | Set-Content openssl_ca.cnf
+
+# Generar CA
+d:\xampp\apache\bin\openssl.exe genrsa 2048 > ca-key.pem
+d:\xampp\apache\bin\openssl.exe req -new -x509 -nodes -days 3650 -key ca-key.pem -out ca.pem -config openssl_ca.cnf
+
+# Modificar CN para server
+(Get-Content openssl_ca.cnf) -replace 'CN=.*', 'CN=localhost' | Set-Content openssl_server.cnf
+
+# Generar server cert
+d:\xampp\apache\bin\openssl.exe genrsa 2048 > server-key.pem
+d:\xampp\apache\bin\openssl.exe req -new -key server-key.pem -out server-req.pem -config openssl_server.cnf
+d:\xampp\apache\bin\openssl.exe x509 -req -in server-req.pem -days 3650 -CA ca.pem -CAkey ca-key.pem -set_serial 01 -out server-cert.pem
+
+# Limpiar
+Remove-Item server-req.pem, openssl_*.cnf -Force
+```
+
+**Después de generar los certificados manualmente:**
+1. Continúa con el **PASO 2** de la guía (editar my.ini)
+2. O vuelve a ejecutar el script - detectará los certificados existentes
+
+---
+
 ## 📚 RESUMEN RÁPIDO
 
 ### Comandos esenciales (copia y pega en orden):

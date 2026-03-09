@@ -114,52 +114,74 @@ if ($existingCerts.Count -gt 0) {
 if (-not $skipCerts) {
     # Generar CA key
     Write-Host "  Generando clave CA..." -NoNewline
-    $result = cmd /c "$opensslPath genrsa 2048 > ca-key.pem 2>nul"
+    $result = cmd /c "`"$opensslPath`" genrsa 2048 > ca-key.pem 2>&1"
     if (Test-Path "ca-key.pem") {
         Write-Host " OK" -ForegroundColor Green
     } else {
         Write-Host " ERROR" -ForegroundColor Red
+        Write-Host "    Error: $result" -ForegroundColor Yellow
         $errorCount++
     }
 
     # Generar CA cert
     Write-Host "  Generando certificado CA..." -NoNewline
-    $result = cmd /c "$opensslPath req -new -x509 -nodes -days 3650 -key ca-key.pem -out ca.pem -subj /C=ES/ST=Madrid/L=Madrid/O=Student/OU=Database/CN=MySQL_CA 2>nul"
+    $result = cmd /c "`"$opensslPath`" req -new -x509 -nodes -days 3650 -key ca-key.pem -out ca.pem -subj `"/C=ES/ST=Madrid/L=Madrid/O=Student/OU=Database/CN=MySQL_CA`" 2>&1"
     if (Test-Path "ca.pem") {
         Write-Host " OK" -ForegroundColor Green
     } else {
         Write-Host " ERROR" -ForegroundColor Red
+        Write-Host "    Error: $result" -ForegroundColor Yellow
+        if (-not (Test-Path "ca-key.pem")) {
+            Write-Host "    Problema: ca-key.pem no existe" -ForegroundColor Red
+        }
         $errorCount++
     }
 
     # Generar server key
     Write-Host "  Generando clave servidor..." -NoNewline
-    $result = cmd /c "$opensslPath genrsa 2048 > server-key.pem 2>nul"
+    $result = cmd /c "`"$opensslPath`" genrsa 2048 > server-key.pem 2>&1"
     if (Test-Path "server-key.pem") {
         Write-Host " OK" -ForegroundColor Green
     } else {
         Write-Host " ERROR" -ForegroundColor Red
+        Write-Host "    Error: $result" -ForegroundColor Yellow
         $errorCount++
     }
 
     # Generar server request
     Write-Host "  Generando solicitud servidor..." -NoNewline
-    $result = cmd /c "$opensslPath req -new -key server-key.pem -out server-req.pem -subj /C=ES/ST=Madrid/L=Madrid/O=Student/OU=Database/CN=localhost 2>nul"
+    $result = cmd /c "`"$opensslPath`" req -new -key server-key.pem -out server-req.pem -subj `"/C=ES/ST=Madrid/L=Madrid/O=Student/OU=Database/CN=localhost`" 2>&1"
     if (Test-Path "server-req.pem") {
         Write-Host " OK" -ForegroundColor Green
     } else {
         Write-Host " ERROR" -ForegroundColor Red
+        Write-Host "    Error: $result" -ForegroundColor Yellow
+        if (-not (Test-Path "server-key.pem")) {
+            Write-Host "    Problema: server-key.pem no existe" -ForegroundColor Red
+        }
         $errorCount++
     }
 
     # Firmar certificado servidor
     Write-Host "  Firmando certificado servidor..." -NoNewline
-    $result = cmd /c "$opensslPath x509 -req -in server-req.pem -days 3650 -CA ca.pem -CAkey ca-key.pem -set_serial 01 -out server-cert.pem 2>nul"
-    if (Test-Path "server-cert.pem") {
-        Write-Host " OK" -ForegroundColor Green
-    } else {
-        Write-Host " ERROR" -ForegroundColor Red
+    if (-not (Test-Path "server-req.pem")) {
+        Write-Host " ERROR (server-req.pem no existe)" -ForegroundColor Red
         $errorCount++
+    } elseif (-not (Test-Path "ca.pem")) {
+        Write-Host " ERROR (ca.pem no existe)" -ForegroundColor Red
+        $errorCount++
+    } elseif (-not (Test-Path "ca-key.pem")) {
+        Write-Host " ERROR (ca-key.pem no existe)" -ForegroundColor Red
+        $errorCount++
+    } else {
+        $result = cmd /c "`"$opensslPath`" x509 -req -in server-req.pem -days 3650 -CA ca.pem -CAkey ca-key.pem -set_serial 01 -out server-cert.pem 2>&1"
+        if (Test-Path "server-cert.pem") {
+            Write-Host " OK" -ForegroundColor Green
+        } else {
+            Write-Host " ERROR" -ForegroundColor Red
+            Write-Host "    Error: $result" -ForegroundColor Yellow
+            $errorCount++
+        }
     }
 
     # Limpiar temporal
@@ -385,13 +407,38 @@ if ($errorCount -eq 0) {
     Write-Host "`nMySQL:" -ForegroundColor Yellow
     Write-Host "  Estado SSL: HABILITADO"
     Write-Host "  Puerto: 3306"
+    Write-Host "  Usuario: tpcc (password: tpcc)"
     Write-Host "`nHammerDB:" -ForegroundColor Yellow
     Write-Host "  Listo para configurar con las instrucciones de arriba"
 } else {
     Write-Host "[ERROR] " -ForegroundColor Red -NoNewline
     Write-Host "Se encontraron $errorCount errores"
-    Write-Host "`nRevisa los mensajes de error y consulta la guia:" -ForegroundColor Yellow
-    Write-Host "  $XamppPath\GUIA_ESTUDIANTES_HAMMERDB_SSL.md"
+    
+    Write-Host "`n" -NoNewline
+    Write-Host "ERRORES COMUNES Y SOLUCIONES:" -ForegroundColor Yellow
+    Write-Host "============================================" -ForegroundColor Yellow
+    
+    Write-Host "`n1. Error en 'Generando certificado CA' o 'Generando solicitud servidor':" -ForegroundColor Cyan
+    Write-Host "   Problema: OpenSSL no puede procesar el parametro -subj" -ForegroundColor White
+    Write-Host "   Solucion: Ejecuta manualmente estos comandos:`n" -ForegroundColor White
+    Write-Host "   cd $mysqlDataDir" -ForegroundColor Gray
+    Write-Host "   `"$opensslPath`" genrsa 2048 > ca-key.pem" -ForegroundColor Gray
+    Write-Host "   `"$opensslPath`" req -new -x509 -nodes -days 3650 -key ca-key.pem -out ca.pem" -ForegroundColor Gray
+    Write-Host "   (Te pedira datos: pais=ES, estado=Madrid, etc. o pulsa Enter)" -ForegroundColor Yellow
+    Write-Host "   `"$opensslPath`" genrsa 2048 > server-key.pem" -ForegroundColor Gray
+    Write-Host "   `"$opensslPath`" req -new -key server-key.pem -out server-req.pem" -ForegroundColor Gray
+    Write-Host "   (Te pedira datos de nuevo, Common Name=localhost)" -ForegroundColor Yellow
+    Write-Host "   `"$opensslPath`" x509 -req -in server-req.pem -days 3650 -CA ca.pem -CAkey ca-key.pem -set_serial 01 -out server-cert.pem" -ForegroundColor Gray
+    
+    Write-Host "`n2. Si OpenSSL no esta en la ruta esperada:" -ForegroundColor Cyan
+    Write-Host "   Busca openssl.exe en tu instalacion XAMPP" -ForegroundColor White
+    Write-Host "   Suele estar en: xampp\apache\bin\openssl.exe" -ForegroundColor White
+    
+    Write-Host "`n3. Despues de generar certificados manualmente:" -ForegroundColor Cyan
+    Write-Host "   Vuelve a ejecutar este script, detectara los certificados existentes" -ForegroundColor White
+    
+    Write-Host "`nRevisa los mensajes de error arriba para mas detalles." -ForegroundColor Yellow
+    Write-Host "`nGuia completa: $XamppPath\GUIA_ESTUDIANTES_HAMMERDB_SSL.md" -ForegroundColor Cyan
 }
 
 Write-Host "`n============================================`n" -ForegroundColor Cyan

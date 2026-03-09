@@ -210,6 +210,37 @@ Test-Path d:\xampp\mysql\data\server-key.pem
 2. Verifica my.ini tiene las líneas SSL
 3. Reinicia MySQL de nuevo
 
+### ❌ ERROR: Script falla al generar certificado CA o solicitud servidor
+**Síntoma:** Claves (genrsa) OK, pero certificados (req/x509) ERROR
+
+**Causa:** OpenSSL necesita modo interactivo
+
+**Solución rápida (MODO MANUAL):**
+```powershell
+cd d:\xampp\mysql\data
+
+# Genera claves (automático)
+d:\xampp\apache\bin\openssl.exe genrsa 2048 > ca-key.pem
+d:\xampp\apache\bin\openssl.exe genrsa 2048 > server-key.pem
+
+# Genera certificados (responde preguntas - pulsa Enter en todo excepto Common Name)
+d:\xampp\apache\bin\openssl.exe req -new -x509 -nodes -days 3650 -key ca-key.pem -out ca.pem
+# Common Name: MySQL_CA
+
+d:\xampp\apache\bin\openssl.exe req -new -key server-key.pem -out server-req.pem
+# Common Name: localhost (IMPORTANTE!)
+
+d:\xampp\apache\bin\openssl.exe x509 -req -in server-req.pem -days 3650 -CA ca.pem -CAkey ca-key.pem -set_serial 01 -out server-cert.pem
+
+# Limpia
+Remove-Item server-req.pem -Force
+
+# Verifica
+Get-ChildItem *.pem
+```
+
+Después continúa con **PASO 2** (editar my.ini)
+
 ---
 
 ## 📞 AYUDA
