@@ -527,7 +527,7 @@ Write-Host "tpcc" -ForegroundColor Green
 Write-Host "   MariaDB Password: " -NoNewline -ForegroundColor White
 Write-Host "tpcc" -ForegroundColor Green
 Write-Host "   Database: " -NoNewline -ForegroundColor White
-Write-Host "test" -ForegroundColor Green
+Write-Host "tpcc" -ForegroundColor Green
 
 Write-Host "`n4. Configuracion SSL:" -ForegroundColor Cyan
 Write-Host "   [X] Enable SSL: " -NoNewline -ForegroundColor White
