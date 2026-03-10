@@ -474,6 +474,29 @@ if (Test-Path $mysqlExe) {
             $errorCount++
         }
     }
+    
+    # Crear base de datos tpcc para HammerDB
+    Write-Step "Creando base de datos 'tpcc'..." "INFO"
+    $dbCheck = & $mysqlExe -u root -h 127.0.0.1 -e "SHOW DATABASES LIKE 'tpcc';" 2>&1
+    
+    if ($dbCheck -match "tpcc") {
+        Write-Step "Base de datos 'tpcc' ya existe" "OK"
+    } else {
+        $createDB = & $mysqlExe -u root -h 127.0.0.1 -e "CREATE DATABASE tpcc CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;" 2>&1
+        
+        if ($LASTEXITCODE -eq 0) {
+            Write-Step "Base de datos 'tpcc' creada exitosamente" "OK"
+            Write-Host "  Database: " -NoNewline -ForegroundColor White
+            Write-Host "tpcc" -ForegroundColor Green
+            Write-Host "  Charset: " -NoNewline -ForegroundColor White
+            Write-Host "utf8mb4" -ForegroundColor Green
+        } else {
+            Write-Step "Error al crear base de datos: $createDB" "ERROR"
+            Write-Host "  Puedes crear la base de datos manualmente:" -ForegroundColor Yellow
+            Write-Host "  mysql -u root -e `"CREATE DATABASE tpcc;`""
+            $errorCount++
+        }
+    }
 } else {
     Write-Step "No se pudo crear usuario (mysql.exe no encontrado)" "WARN"
     Write-Host "  Crea el usuario manualmente antes de usar HammerDB" -ForegroundColor Yellow

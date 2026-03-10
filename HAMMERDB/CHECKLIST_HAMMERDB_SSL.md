@@ -111,6 +111,16 @@ d:\xampp\mysql\bin\mysql.exe -u root -e "CREATE USER 'tpcc'@'localhost' IDENTIFI
 d:\xampp\mysql\bin\mysql.exe -u tpcc -ptpcc -e "SELECT USER();"
 ```
 
+**Crear base de datos tpcc:**
+```powershell
+d:\xampp\mysql\bin\mysql.exe -u root -e "CREATE DATABASE IF NOT EXISTS tpcc CHARACTER SET utf8mb4;"
+```
+
+**Verificar base de datos:**
+```powershell
+d:\xampp\mysql\bin\mysql.exe -u tpcc -ptpcc -e "SHOW DATABASES LIKE 'tpcc';"
+```
+
 ---
 
 ### PASO 5: Verificar SSL

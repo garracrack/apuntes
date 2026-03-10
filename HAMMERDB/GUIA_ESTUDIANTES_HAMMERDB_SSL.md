@@ -264,11 +264,36 @@ d:\xampp\mysql\bin\mysql.exe -u tpcc -ptpcc -e "SELECT USER(), CURRENT_USER();"
 
 ✅ Si ves esto, el usuario fue creado correctamente.
 
-### 5.4 (Opcional) Crear base de datos dedicada
+### 5.4 Crear base de datos tpcc
+
+**IMPORTANTE:** HammerDB necesita que exista una base de datos llamada `tpcc` para el benchmark TPC-C.
 
 ```powershell
-d:\xampp\mysql\bin\mysql.exe -u root -h 127.0.0.1 -e "CREATE DATABASE IF NOT EXISTS tpcc;"
+d:\xampp\mysql\bin\mysql.exe -u root -h 127.0.0.1 -e "CREATE DATABASE IF NOT EXISTS tpcc CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;"
 ```
+
+**Verificar base de datos creada:**
+
+```powershell
+d:\xampp\mysql\bin\mysql.exe -u tpcc -ptpcc -e "SHOW DATABASES;"
+```
+
+**Deberías ver:**
+```
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| mysql             |
+| performance_schema |
+| tpcc              |
+| test              |
++--------------------+
+```
+
+✅ Si ves la base de datos `tpcc`, está lista para usarse con HammerDB.
+
+**Nota:** Si usas el **script automático** (`setup_hammerdb_ssl.ps1`), este paso se hace automáticamente.
 
 ---
 
